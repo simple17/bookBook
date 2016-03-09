@@ -1,0 +1,246 @@
+1. Пользователи
+	1.1 получить информацию о текущем пользователе
+		- url: /rest/users/getcurrent
+		- GET (requerst type)
+		- --> (no params)
+		- response (<--): {
+			"id": 1
+			"name": "Ivan",
+			"secondName": "Ivanov",
+			"lastName": "Ivanovich",
+			"email": "ivanov@mail.ru",
+			"books": 43,
+			"tags": 25
+		}
+	1.2 добавить нового пользователя (регистрация)
+		- /rest/users/
+		- POST
+		- --> {
+			"name": "Ivan",
+			"secondName": "Ivanov",
+			"lastName": "Ivanovich",
+			"email": "ivanov@mail.ru",
+			"password": "xxx"
+		}
+		- <-- id пользователя
+	1.3 изменение данных пользователя
+		- /rest/users/:id
+		- PUT
+		- --> {
+			"name": "Ivan",
+			"secondName": "Ivanov",
+			"lastName": "Ivanovich",
+			"email": "ivanov@mail.ru",
+			"password": "xxx"
+		}
+		- <-- 200 OK
+2. Авторизация
+	2.1 авторизовать пользователя
+		- /rest/login
+		- POST
+		- --> {
+			email": "ivanov@mail.ru",
+			"password": "xxx"
+		}
+		- <-- {
+			"id": 1
+			"name": "Ivan",
+			"secondName": "Ivanov",
+			"lastName": "Ivanovich",
+			"email": "ivanov@mail.ru",
+			"books": 43,
+			"tags": 25
+		}
+	2.2 выйти из приложения
+		- /rest/logout
+		- POST
+		- --> (no)
+		- <-- 200 OK
+3. Авторы
+	3.1 добавить автора
+		- /rest/author
+		- POST
+		- --> {
+			"fio": "Иванов Иван Иванович"
+		}
+		- <-- {
+			"id": 1
+		}
+	3.2 изменить ФИО автора
+		- /rest/author
+		- PUT
+		- --> {
+			"fio": "Иванов Иван Иванович"
+		}
+		- <-- 200 OK
+	3.3 удалить автора (сначала нужно выдать предупреждение, а после удаления книги будут без автора)
+		- /rest/author/:id
+		- DELETE
+		- --> (no)
+		- <-- 200 OK
+	3.4 поиск автора по имени
+		- /rest/author/:name
+		- GET
+		- --> (no)
+		- <-- [
+			{	
+				"id": 0,
+				"fio": "Иванов Иван Иванович"
+			},{	
+				"id": 1,
+				"fio": "Петров Иван Иванович"
+			}
+		]
+4. Книги
+	4.1 получить полную информацию о книге
+		- rest/book/:id
+		- GET
+		- --> (no)
+		- <-- {
+			"imageUrl": "/images/image1.jpg",
+			"title": "Приключения Пиноккио",
+			"year": "1965",
+			"publisher": "Издательство детская литература",
+			"authors": [
+				{"id":1, "fio: "Иванов Иван Иванович"},
+				{"id":2, "fio: "Петров Иван Иванович"},
+			],
+			"tags": [
+				{"id": 0, "title": "tag1"},
+				{"id": 1, "title": "tag2"}
+				{"id": 3, "title": "tag3"}
+			],
+			"rating": 4 (число 1-5),
+			"comments": [
+				{"id":1, "text": "Комментарий1"},
+				{"id":2, "text": "Комментарий1"},
+			] 
+
+		}
+	4.2 добавить книгу
+		- rest/book/
+		- POST
+		- --> {
+			"imageUrl": "/images/image1.jpg",
+			"title": "Приключения Пиноккио",
+			"year": "1965",
+			"publisher": "Издательство детская литература",
+			"authors": [
+				{"id":1, "fio: "Иванов Иван Иванович"},
+				{"id":2, "fio: "Петров Иван Иванович"},
+			],
+			"tags": [
+				{"id": 0, "title": "tag1"},
+				{"id": 1, "title": "tag2"}
+				{"id": 3, "title": "tag3"}
+			],
+			"rating": 4
+		}
+	4.3 изменить книгу
+		- rest/book/:id
+		- PUT
+		--> {
+			"imageUrl": "/images/image1.jpg",
+			"title": "Приключения Пиноккио",
+			"year": "1965",
+			"publisher": "Издательство детская литература",
+			"rating": 4
+		}
+		<-- 200 OK
+	4.4 удалить книгу
+		- rest/book/:id
+		- DELETE 
+		--> (no)
+		<-- 200 OK
+	4.5 Добавить автора книге
+		- rest/book/:idBook/authors
+		- PUT
+		--> {"id":1} // id добавляемого автора
+		<-- 200 OK
+	4.6 Удалить автора у книги
+		- rest/book/:id/authors
+		- DELETE
+		--> {"id":1} // id удаляемого автора
+		<-- 200 OK
+	4.7 Добавить тэг книге
+		- rest/book/:id/tags
+		- PUT
+		--> {"id":1} // id добавляемого тэга
+		<-- 200 OK
+	4.7 Удалить тэг у книги
+		- rest/book/:id/tags
+		- DELETE
+		--> {"id":1} // id удаляемого тэга
+		<-- 200 OK
+	4.7 поменять обложку (картинку) книги
+		rest/book/:id/image
+		-- POST
+		--> {image as base64}
+		<-- 200 OK
+	4.8 Поиск с постраничнм выводом (наверно странно что POST а не GET?)
+		// страницы начинаются с нуля и содержат неизменяемое количество элементов
+		- rest/book/search
+		- POST
+		--> {
+			"title": "приключения" // строка которая ищется в названии,
+			"tags": [1, 2, 3],
+			"author": 1,
+			"page": 0
+		}
+		<-- [
+				{
+					"id": 0
+					"imageUrl":  "/images/image1.jpg",
+					"title": "Приключения Пиноккио",
+					"rating": 3 
+				},{
+					"id": 1
+					"imageUrl":  "/images/image2.jpg",
+					"title": "Приключения Пиноккио в стране сказок",
+					"rating": 5 
+				}
+		]
+	4.9 Установить рейтинг
+		- rest/book/:id/tags
+		- PUT
+		--> 4
+		<-- 200 OK
+5. Комментарии
+	5.1 добавить комментарий к книге
+		- rest/comment/
+		- POST
+		--> {
+			"bookId": 1,
+			"text": "Это мой крутой комментарий"
+		}
+		<-- {id: 123} 
+	5.2 Изменить комментарий к книге
+		- rest/comment/:id
+		- PUT
+		--> {
+			"text": "Это мой новый крутой комментарий"
+		}
+		<-- 200 ОК
+	5.3 Удалить комментарий к книге
+		- rest/comment/:id
+		- DELETE
+		--> (no)
+		<-- 200 Ok
+6. Рекомендации
+	6.1 Получить рекомендации для книги
+		- rest/recommendation/:bookId
+		- GET
+		--> (no)
+		<-- [{
+					"id": 0
+					"imageUrl":  "/images/image1.jpg",
+					"title": "Приключения Пиноккио",
+					"rating": 3 
+				},{
+					"id": 1
+					"imageUrl":  "/images/image2.jpg",
+					"title": "Приключения Пиноккио в стране сказок",
+					"rating": 5 
+			}] // выводит то же самое, что и краткая информация о книге
+
+
