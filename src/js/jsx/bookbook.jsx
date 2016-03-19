@@ -9,6 +9,7 @@ export default ({
   return (
     <div className='container'>
       <TopMenu />
+      <h1>Моя библиотека</h1>
       <button onClick={loadMore}>Load books</button>
       <div className='row'>
         {books.map(book => (
