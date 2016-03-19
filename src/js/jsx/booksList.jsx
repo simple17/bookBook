@@ -14,7 +14,7 @@ const List = ({
         {books.map(book => (
           <Book
             key={book.id}
-            name={book.title}
+            title={book.title}
             author={book.author}
             rating={book.rating}
             readMore={(e)=>{
