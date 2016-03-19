@@ -76,6 +76,13 @@
     vertical-align: middle;
     display: inline-block;
 }
+.customInput {
+    border-radius: 0;
+    background: white;
+    background-color: white;
+    color: #201600;
+    border: 2px solid #201600;
+}
 .customButton {
     border-radius: 0;
     background: white;
@@ -90,7 +97,7 @@
     background: #cccccc;
     background-color: #cccccc;
     color: #201600;
-    border: 2px solid #201600;
+    /*border: 2px solid #201600;*/
     border-bottom: 5px solid #201600;
     border-right: 5px solid #201600;
 }
@@ -123,14 +130,67 @@
     /*border-bottom: 5px solid #201600;*/
     /*border-right: 5px solid #201600;*/
 }
-.customInput {
+.customLabel {
+    color: #201600;
+    font-size: 18pt;
+    padding-bottom: -25px;
+    margin-bottom: 0px;
+}
+.tagButton {
     border-radius: 0;
-    background: white;
+    border: 2px solid #201600;
+    color: #201600;
+    font-size: 14pt;
     background-color: white;
+    background: white;
+    margin: 2px;
+}
+
+.tagButton:hover {
+    border-radius: 0;
+    background: #cccccc;
+    background-color: #cccccc;
     color: #201600;
     border: 2px solid #201600;
+    /*border-bottom: 5px solid #201600;*/
+    /*border-right: 5px solid #201600;*/
 }
-.form-group, .form-horizontal, .jumbotron{
-    background: white;
-    background-color: white;
+
+.tagButton:focus {
+    border-radius: 0;
+    background: #201600;
+    background-color: #201600;
+    color: white;
+    border: 2px solid #201600;
+    /*border-bottom: 5px solid #201600;*/
+    /*border-right: 5px solid #201600;*/
+}
+.tagButton:active {
+    border-radius: 0;
+    background: #201600 !important;
+    box-shadow: none !important;
+    background-color: #201600 !important;
+    color: white !important;
+    border: 2px solid #201600 !important;
+    text-shadow: none;
+    /*border-bottom: 5px solid #201600;*/
+    /*border-right: 5px solid #201600;*/
+}
+.tagButton:visited {
+    border-radius: 0;
+    background: #201600;
+    background-color: #201600;
+    color: white;
+    border: 2px solid #201600;
+    /*border-bottom: 5px solid #201600;*/
+    /*border-right: 5px solid #201600;*/
+}
+.tagButtonAdd {
+    background: #201600;
+    color: white;
+    box-shadow: none;
+    text-shadow: none;
+}
+.tagNotAdded{
+    display: none;
 }
