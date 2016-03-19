@@ -35,7 +35,16 @@ public class Neo4jApi extends AbstractVerticle {
          */
 		eb.consumer("neo4j.book.addBook", addBookMessage -> {
 
-			JsonObject bookData = (JsonObject) addBookMessage.body();
+
+            JsonObject bookData = (JsonObject) addBookMessage.body();
+/*
+            String title = bookData.getString("title");
+            System.out.println("title: " + title);
+            JsonArray authors = bookData.getJsonArray("authors");
+            System.out.println("authors: " + authors);
+            String query = CypherFactory.createQuery(title, authors, null);
+*/
+
 			JsonObject req = new JsonObject(queryTemplate.toString());
 			req.getJsonObject("params").put("props", bookData);
             req.put("query", addBookQuery);
