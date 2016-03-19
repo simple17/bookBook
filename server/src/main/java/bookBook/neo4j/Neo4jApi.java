@@ -1,6 +1,7 @@
 package bookBook.neo4j;
 
 import bookBook.neo4j.map.BookMapping;
+import bookBook.neo4j.map.TagMapping;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.json.JsonArray;
@@ -207,7 +208,12 @@ public class Neo4jApi extends AbstractVerticle {
                 if (cypherResponse.succeeded()) {
                     // удачно сохранили в neo4j, надо достать и отправить id
                     JsonObject neo4jResponseData = (JsonObject) cypherResponse.result().body();
-                    String resp = neo4jResponseData.toString();
+                    JsonArray tags = neo4jResponseData.getJsonArray("data");
+                    System.out.println("tags: " + tags);
+                    JsonArray tagsMapped = TagMapping.mapAllTags(tags);
+                    String resp = tagsMapped.toString();
+
+                    //String resp = neo4jResponseData.toString();
                     getByIdMessage.reply(resp);
                 } else {
                     // сохранение с ошибкой, отправлям fail
