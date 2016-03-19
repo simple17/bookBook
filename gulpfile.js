@@ -5,6 +5,11 @@ gulp.task('deliveryHtml', function(){
       .pipe(gulp.dest('./client'));
 });
 
+gulp.task('deliveryJs', function(){
+  gulp.src('./node_modules/whatwg-fetch/fetch.js')
+      .pipe(gulp.dest('./client/js'));
+});
+
 gulp.task('deliveryCss', function(){
   gulp.src('./node_modules/bootstrap/dist/css/bootstrap.min.css')
       .pipe(gulp.dest('./client/css'));
@@ -16,6 +21,6 @@ gulp.task('deliveryFonts', function(){
       .pipe(gulp.dest('./client/fonts'));
 });
 
-gulp.task('delivery', ['deliveryHtml', 'deliveryCss', 'deliveryFonts']);
+gulp.task('delivery', ['deliveryHtml', 'deliveryCss', 'deliveryFonts', 'deliveryJs']);
 
 gulp.task('default', ['delivery']);

@@ -97,8 +97,8 @@ const render = () => {
 };
 
 //bookBookStore.subscribe(render);
-bookBookStore.dispatch({
-  type: 'SET_LIST',
-  books: books
-});
+// bookBookStore.dispatch({
+//   type: 'SET_LIST',
+//   books: books
+// });
 render();
