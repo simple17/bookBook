@@ -1,8 +1,10 @@
 package bookBook.router.book;
 
 import io.vertx.core.Vertx;
+import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.file.FileSystem;
 import io.vertx.core.http.HttpMethod;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 
 import java.util.HashMap;
@@ -15,6 +17,7 @@ public class BookRouter {
     public static void initBookRouter(Router router, Vertx vertx){
 
         FileSystem fs = vertx.fileSystem();
+        EventBus eb = vertx.eventBus();
         String searchResponse = "../doc/4.8-bookSearch-response.json";
         Map<String,String> responses = new HashMap<>();
 
@@ -44,5 +47,23 @@ public class BookRouter {
             rc.response().end(responses.get(searchResponse));
         });
 
+
+        router.route()
+                .path("/")
+                .method(HttpMethod.POST).handler(rc -> {
+
+            JsonObject json = rc.getBodyAsJson();
+
+            eb.send("neo4j.book.addBook", json, neo4jResponse -> {
+                rc.response().putHeader("Content-type", "application/json; charset=utf-8");
+                rc.response().end(neo4jResponse.result().body().toString());
+            });
+
+            System.out.println(json.toString());
+            //rc.response().end("ок");
+
+
+        });
+
+        }
     }
-}

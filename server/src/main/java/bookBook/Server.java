@@ -12,6 +12,7 @@ public class Server extends AbstractVerticle {
     public void start(Future<Void> fut) {
 
         vertx.deployVerticle("bookBook.neo4j.Neo4j");
+        vertx.deployVerticle("bookBook.neo4j.Neo4jApi");
 
         int port = config().getInteger("http.port", 8080);
         System.out.println(port);
