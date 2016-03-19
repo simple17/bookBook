@@ -1,6 +1,7 @@
 import React from 'react';
 import Book from './bookPreview.jsx';
 import TopMenu from './topMenu.jsx';
+import SearchFilter from './searchFilter.jsx';
 
 export default ({
   books,
@@ -10,7 +11,7 @@ export default ({
     <div className='container'>
       <TopMenu />
       <h1>Моя библиотека</h1>
-      <button onClick={loadMore}>Load books</button>
+      <SearchFilter loadMore={loadMore}/>
       <div className='row'>
         {books.map(book => (
           <Book
