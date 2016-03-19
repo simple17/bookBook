@@ -4,7 +4,8 @@ export default {
     methods: {
       search: '/rest/book/search',
       book: '/rest/book',
-      tagsCloud: '/rest/tag/all'
+      tagsCloud: '/rest/tag/all',
+      createTag: '/rest/book'
     }
   },
   // api: {

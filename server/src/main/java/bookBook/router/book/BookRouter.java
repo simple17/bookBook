@@ -1,11 +1,14 @@
 package bookBook.router.book;
 
+import bookBook.neo4j.CypherFactory;
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.file.FileSystem;
 import io.vertx.core.http.HttpMethod;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
+import org.neo4j.cypherdsl.CypherQuery;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,18 +55,22 @@ public class BookRouter {
 
             System.out.println("/search");
 
-            /*
-            eb.send("neo4j.book.searchBook", new JsonObject(), neo4jResponse -> {
+            JsonObject json = rc.getBodyAsJson();
+            //CypherFactory.createQuery("", tags);
+
+
+
+            eb.send("neo4j.book.searchBook", json, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
-            */
 
 
+/*
             rc.response().putHeader("Access-Control-Allow-Origin", "*");
             rc.response().end(responses.get(searchResponse));
-
+*/
         });
 
         /*
@@ -150,7 +157,7 @@ public class BookRouter {
             System.out.println("json: " + json);
 
             JsonObject data = new JsonObject();
-            if (json.getString("id") == null) {
+            if (json.getLong("id") == null) {
                 data.put("bookId", id);
                 data.put("name", json.getString("name"));
                 System.out.println("data: " + data);
@@ -163,9 +170,9 @@ public class BookRouter {
 
                 //rc.response().end("ok");
             } else {
-                String tagId = json.getString("id");
+                Long tagId = json.getLong("id");
                 data.put("bookId", id);
-                data.put("tagId", id);
+                data.put("tagId", tagId);
                 eb.send("neo4j.book.addExistingTag", data, neo4jResponse -> {
                     rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                     rc.response().putHeader("Access-Control-Allow-Origin", "*");

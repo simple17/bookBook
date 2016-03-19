@@ -40,6 +40,10 @@ class Book extends React.Component {
               disselect={(e) => {
                 e.preventDefault();
               }}
+              addTag={(value) => {
+                console.log(value + "  " + book.id);
+                store.dispatch(api.CreateTag(book.id, value));
+              }}
               />
           </div>
         </article>
