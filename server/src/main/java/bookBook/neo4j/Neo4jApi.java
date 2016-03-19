@@ -34,6 +34,9 @@ public class Neo4jApi extends AbstractVerticle {
                 .put("params", new JsonObject());
 
 
+        String getAllTags = "MATCH (n:Tag) RETURN n";
+
+
         /**
          * Добавление книги
          */
@@ -155,7 +158,7 @@ public class Neo4jApi extends AbstractVerticle {
 
 
         /*
-            Добавить новый тэг
+            Добавить новый тэг к книге
          */
         eb.consumer("neo4j.book.addNewTag", getByIdMessage -> {
             JsonObject data = (JsonObject) getByIdMessage.body();
@@ -183,8 +186,33 @@ public class Neo4jApi extends AbstractVerticle {
                     getByIdMessage.fail(0, cypherResponse.cause().getMessage());
                 }
             });
+        });
 
 
+        /*
+            Получить все тэги
+         */
+        eb.consumer("neo4j.book.getAllTags", getByIdMessage -> {
+
+            JsonObject req = new JsonObject(queryTemplate.toString());
+            req.put("query", getAllTags);
+
+            System.out.println("neo4j.book.getAllTags: " + req);
+
+
+
+            eb.send("neo4j.runCypher", req, cypherResponse -> {
+
+                if (cypherResponse.succeeded()) {
+                    // удачно сохранили в neo4j, надо достать и отправить id
+                    JsonObject neo4jResponseData = (JsonObject) cypherResponse.result().body();
+                    String resp = neo4jResponseData.toString();
+                    getByIdMessage.reply(resp);
+                } else {
+                    // сохранение с ошибкой, отправлям fail
+                    getByIdMessage.fail(0, cypherResponse.cause().getMessage());
+                }
+            });
 
             //getByIdMessage.reply("ok");
         });
