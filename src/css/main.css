@@ -4,11 +4,27 @@
 }
 
 .glyphicon-user {
-  font-size: 35px;
+  font-size: 30px;
   cursor: pointer;
   margin-right: 20px;
 }
 
+.glyphicon-plus {
+  font-size: 30px;
+  cursor: pointer;
+}
+
 #topLogo {
   margin-left: 20px;
+}
+
+#liMyLibrary {
+  background-color: #201600;
+}
+
+#liMyLibrary a {
+  color: white;
+  font-weight: bold;
+  display: block;
+  line-height:35px;
 }

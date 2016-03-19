@@ -13,6 +13,11 @@ export default ({}) => {
         </div>
         <ul className="nav navbar-nav navbar-right">
           <li>
+            <Link to="/add">
+                {<span className="glyphicon glyphicon-plus"></span>}
+            </Link>
+          </li>
+          <li id="liMyLibrary">
             <Link to="/">
                МОЯ БИБЛИОТЕКА
             </Link>
