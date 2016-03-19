@@ -8,7 +8,7 @@ export default ({}) => {
       <nav className="navbar navbar-default">
         <div className="navbar-header">
           <Link to="/">
-            {<img src="img/logo.png" alt="Logo" width="200" height="50" id="topLogo"/>}
+            {<img src="img/logo.png" alt="Logo" id="topLogo"/>}
           </Link>
         </div>
         <ul className="nav navbar-nav navbar-right">
