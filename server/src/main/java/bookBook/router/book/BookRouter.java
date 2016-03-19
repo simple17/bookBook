@@ -106,6 +106,34 @@ public class BookRouter {
         });
 
 
+        /*
+            Добавить автора книге
+         */
+        router.route()
+                .path("/:id/author")
+                .method(HttpMethod.PUT).handler(rc -> {
+
+
+            Long id = Long.valueOf(rc.request().getParam("id"));
+            System.out.println("id: " + id);
+            JsonObject json = rc.getBodyAsJson();
+            System.out.println("json: " + json);
+
+            JsonObject data = new JsonObject();
+            if (json.getString("id") == null) {
+                data.put("bookId", id);
+                data.put("fio", json.getString("fio"));
+                eb.send("neo4j.book.addNewAuthor", data, neo4jResponse -> {
+                    rc.response().putHeader("Content-type", "application/json; charset=utf-8");
+                    rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                    rc.response().end(neo4jResponse.result().body().toString());
+                });
+            } else {
+                rc.response().end("NOT IMPLEMENTED");
+            }
+
+        });
+
 
         }
     }
