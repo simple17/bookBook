@@ -5,6 +5,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.file.FileSystem;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.BodyHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,8 @@ import java.util.Map;
 public class RestApiRouter {
 
     public static void initRestRouter(Router router, Vertx vertx){
+
+        router.route().handler(BodyHandler.create());
 
         Router bookAPI = Router.router(vertx);
         BookRouter.initBookRouter(bookAPI, vertx);
