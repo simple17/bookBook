@@ -29,11 +29,12 @@ public class Neo4jApi extends AbstractVerticle {
         String searchBookQuery = "MATCH (n:Book) RETURN n";
         //String getBookById = "MATCH b WHERE id(b)={bookId}  RETURN b";
         //String getBookById = "MATCH b-[:WROTE]-a WHERE id(b)={bookId} RETURN b, collect(distinct a)";
-        String getBookById = "START b=NODE(3) OPTIONAL MATCH b-[:WROTE]-a OPTIONAL MATCH b-[:HAS_TAG]-t RETURN b, collect(distinct a), collect(distinct t)";
+        //String getBookById = "START b=NODE({bookId}) OPTIONAL MATCH b-[:WROTE]-a OPTIONAL MATCH b-[:HAS_TAG]-t RETURN b, collect(distinct a), collect(distinct t)";
+        String getBookById = "START b=NODE({bookId}) OPTIONAL MATCH b-[:WROTE]-a OPTIONAL MATCH b-[:HAS_TAG]-t OPTIONAL MATCH b-[:HAS_COMMENT]-c RETURN b, collect(distinct a), collect(distinct t), collect(distinct c)";
 
         String addNewAuthor = "START b=NODE({bookId}) CREATE (b)<-[:WROTE]-(a:Author {fio: {fio}}) return a";
         String addNewTag = "START b=NODE({bookId}) CREATE (b)-[:HAS_TAG]->(t:Tag {name: {name}}) return t";
-        String addExistingTag = "START b=NODE({bookId}) CREATE (b)-[:HAS_TAG]->(t:Tag {name: {name}}) return t";
+        String addExistingTag = "START b=NODE({bookId}), t=NODE({tagId}) CREATE (b)-[:HAS_TAG]->(t) return t";
 		JsonObject queryTemplate = new JsonObject()
                 .put("params", new JsonObject());
 
@@ -194,18 +195,18 @@ public class Neo4jApi extends AbstractVerticle {
 
         eb.consumer("neo4j.book.addExistingTag", getByIdMessage -> {
             JsonObject data = (JsonObject) getByIdMessage.body();
-            System.out.println("neo4j.book.addNewAuthor: " + data);
+            System.out.println("neo4j.book.addExistingTag: " + data);
 
             JsonObject req = new JsonObject(queryTemplate.toString());
 
 
             req.getJsonObject("params").put("bookId", data.getLong("bookId"));
-            req.getJsonObject("params").put("tagId", data.getString("tagId"));
-            req.put("query", addNewTag);
+            req.getJsonObject("params").put("tagId", data.getLong("tagId"));
+            req.put("query", addExistingTag);
 
             System.out.println("neo4j.book.addExistingTag: " + req);
 
-        /*
+
             eb.send("neo4j.runCypher", req, cypherResponse -> {
 
                 if (cypherResponse.succeeded()) {
@@ -218,8 +219,8 @@ public class Neo4jApi extends AbstractVerticle {
                     getByIdMessage.fail(0, cypherResponse.cause().getMessage());
                 }
             });
-        */
-            getByIdMessage.reply("ok");
+
+            //getByIdMessage.reply("ok");
         });
 
 
