@@ -10,7 +10,7 @@ const List = ({
   return (
     <div className=''>
       <SearchFilter loadMore={loadMore}/>
-      <div className='row'>
+      <div className='row top-buffer'>
         {books.map(book => (
           <Book
             key={book.id}

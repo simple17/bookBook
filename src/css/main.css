@@ -14,6 +14,10 @@
   cursor: pointer;
 }
 
+.top-buffer { margin-top:20px; }
+
+.book-preview_title { min-height: 60px; }
+
 #topLogo {
   margin-left: 20px;
 }
