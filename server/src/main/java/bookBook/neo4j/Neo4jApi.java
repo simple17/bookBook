@@ -25,8 +25,9 @@ public class Neo4jApi extends AbstractVerticle {
 		 */
 		String addBookQuery = "CREATE (b:Book { props } ) return id(b)";
         String searchBookQuery = "MATCH (n:Book) RETURN n";
-        String getBookById = "MATCH b WHERE id(b)={bookId}  RETURN b";
-        String addNewAuthor = "START b=NODE({bookId}) CREATE (b)<-[:WROTE]-(a:Author {name: {fio}}) return a";
+        //String getBookById = "MATCH b WHERE id(b)={bookId}  RETURN b";
+        String getBookById = "MATCH b-[:WROTE]-a WHERE id(b)={bookId} RETURN b, collect(distinct a)";
+        String addNewAuthor = "START b=NODE({bookId}) CREATE (b)<-[:WROTE]-(a:Author {fio: {fio}}) return a";
 		JsonObject queryTemplate = new JsonObject()
                 .put("params", new JsonObject());
 
@@ -104,7 +105,10 @@ public class Neo4jApi extends AbstractVerticle {
                 if (cypherResponse.succeeded()) {
                     // удачно сохранили в neo4j, надо достать и отправить id
                     JsonObject neo4jResponseData = (JsonObject) cypherResponse.result().body();
-                    String resp = neo4jResponseData.toString();
+                    JsonArray data = neo4jResponseData.getJsonArray("data");
+                    JsonObject response = Neo4jMapping.mapBookById(data);
+
+                    String resp = response.toString();
                     getByIdMessage.reply(resp);
                 } else {
                     // сохранение с ошибкой, отправлям fail
