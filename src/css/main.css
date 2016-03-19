@@ -45,3 +45,92 @@
   display: block;
   line-height:35px;
 }
+
+#firstBlock {
+    background-image: url("../img/firstBlock.png");
+}
+#secondBlock {
+    background-image: url("../img/secondBlock.png");
+}
+#thirdBlock {
+    background-image: url("../img/firstBlock.png");
+    padding: 0;
+
+}
+#fourthBlock {
+    background-image: url("../img/secondBlock.png");
+}
+.block {
+    height: 100vh;
+    background-color: #083452;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+#logo {
+    width: 100%;
+}
+#loginBlock {
+    width: 100%;
+    border-radius: 0;
+    border: 2px solid #201600;
+    vertical-align: middle;
+    display: inline-block;
+}
+.customButton {
+    border-radius: 0;
+    background: white;
+    background-color: white;
+    color: #201600;
+    border: 2px solid #201600;
+    border-bottom: 5px solid #201600;
+    border-right: 5px solid #201600;
+}
+.customButton:hover {
+    border-radius: 0;
+    background: #cccccc;
+    background-color: #cccccc;
+    color: #201600;
+    border: 2px solid #201600;
+    border-bottom: 5px solid #201600;
+    border-right: 5px solid #201600;
+}
+
+.customButton:focus {
+    border-radius: 0;
+    background: #201600;
+    background-color: #201600;
+    color: white;
+    border: 2px solid #201600;
+    /*border-bottom: 5px solid #201600;*/
+    /*border-right: 5px solid #201600;*/
+}
+.customButton:active {
+    border-radius: 0;
+    background: #201600 !important;
+    box-shadow: none !important;
+    background-color: #201600 !important;
+    color: white;
+    border: 2px solid #201600 !important;
+    /*border-bottom: 5px solid #201600;*/
+    /*border-right: 5px solid #201600;*/
+}
+.customButton:visited {
+    border-radius: 0;
+    background: #201600;
+    background-color: #201600;
+    color: white;
+    border: 2px solid #201600;
+    /*border-bottom: 5px solid #201600;*/
+    /*border-right: 5px solid #201600;*/
+}
+.customInput {
+    border-radius: 0;
+    background: white;
+    background-color: white;
+    color: #201600;
+    border: 2px solid #201600;
+}
+.form-group, .form-horizontal, .jumbotron{
+    background: white;
+    background-color: white;
+}
