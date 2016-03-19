@@ -111,6 +111,16 @@ public class Neo4jApi extends AbstractVerticle {
                 }
             });
         });
+
+
+        /*
+            Добавить нового автора
+         */
+        eb.consumer("neo4j.book.addNewAuthor", getByIdMessage -> {
+            JsonObject authorData = (JsonObject) getByIdMessage.body();
+            System.out.println("neo4j.book.addNewAuthor: " + authorData);
+            getByIdMessage.reply("ok");
+        });
 	}
 
 }
