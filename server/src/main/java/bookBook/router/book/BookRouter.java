@@ -47,6 +47,7 @@ public class BookRouter {
                 rc.response().end(neo4jResponse.result().body().toString());
             });
             */
+            rc.response().putHeader("Access-Control-Allow-Origin", "*");
             rc.response().end(responses.get(searchResponse));
         });
 

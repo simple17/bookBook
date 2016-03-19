@@ -1,31 +1,51 @@
 {
-	"length": 2,
+	"length": 4,
 	"data": [
 		{
 			"id": 0,
-			"imageUrl":  "/images/image1.jpg",
-			"title": "Приключения Пиноккио",
+			"imageUrl":  "/images/image0.jpg",
+			"title": "Человек, который смеется",
 			"rating": 3,
 			"tags": [
-				{"id": 4, "name": "Название тэга1"},
-				{"id": 5, "name": "Название тэга2"}
+				{"id": 4, "name": "роман"}
 			],
 			"authors": [
-				{"id": 1, "name": "Автор1"},
-				{"id": 2, "name": "Автор2"}
+				{"id": 1, "name": "Гюго Виктор"}
 			]
 		},{
 			"id": 1,
-			"imageUrl":  "/images/image2.jpg",
-			"title": "Приключения Пиноккио в стране сказок",
-			"rating": 5,
+			"imageUrl":  "/images/image1.png",
+			"title": "Вдовий плат",
+			"rating": 4,
 			"tags": [
-				{"id": 6, "name": "Название тэга3"},
-				{"id": 7, "name": "Название тэга4"}
+				{"id": 4, "name": "роман"}
 			],
 			"authors": [
-				{"id": 1, "name": "Автор1"},
-				{"id": 2, "name": "Автор2"}
+				{"id": 2, "name": "Акунин Борис"}
+			]
+		},{
+			"id": 2,
+			"imageUrl":  "/images/image2.jpg",
+			"title": "Волшебник Изумрудного города",
+			"rating": 5,
+			"tags": [
+				{"id": 1, "name": "повесть"},
+				{"id": 2, "name": "сказка"}
+			],
+			"authors": [
+				{"id": 3, "name": "Волков А.М."},
+				{"id": 4, "name": "Владимирский Л.В."}
+			]
+		},{
+			"id": 3,
+			"imageUrl":  "/images/image3.jpg",
+			"title": "Мастер и Маргарита",
+			"rating": 5,
+			"tags": [
+				{"id": 4, "name": "роман"}
+			],
+			"authors": [
+				{"id": 3, "name": "Булгаков Михаил Афанасьевич"}
 			]
 		}
 	]
