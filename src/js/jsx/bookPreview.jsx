@@ -2,7 +2,7 @@ import React from 'react';
 import Rating from './rating.jsx';
 
 export default ({
-  name,
+  title,
   readMore,
   rating,
   author,
@@ -10,7 +10,7 @@ export default ({
 }) => {
   return (
     <article className="col-xs-3">
-      <h3>{name}</h3>
+      <h3>{title}</h3>
       <p>{author}</p>
       <Rating rating={rating}/>
       <a
