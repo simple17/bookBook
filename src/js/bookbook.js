@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
 import {createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
-import BookBookApp from './jsx/bookbook.jsx';
 import mainReducer from './reducers/mainReducer.js';
 
 const bookBookStore = createStore(mainReducer, applyMiddleware(thunk));
+const history = syncHistoryWithStore(browserHistory, bookBookStore)
 
 let books = [
   {
@@ -58,16 +61,44 @@ let testAsync = () => {
 
 };
 
+const TestComponent = ({children}) => {
+  return (
+    <div>{children}</div>
+  );
+
+};
+
+
+// <BookBookApp
+//   books={bookBookStore.getState().booksList}
+//   loadMore={()=>{
+//     bookBookStore.dispatch(testAsync());
+//   }}/>
+//
+
+
+import App from './jsx/app.jsx';
+import BooksList from './jsx/booksList.jsx';
+
 const render = () => {
   ReactDOM.render(
-    <BookBookApp
-      books={bookBookStore.getState().booksList}
-      loadMore={()=>{
-        bookBookStore.dispatch(testAsync());
-      }}/>,
+    <Provider store={bookBookStore}>
+      <div>
+        <Router history={history}>
+          <Route path="/" component={App}>
+            <IndexRoute component={BooksList}/>
+            <Route path="list" component={BooksList}/>
+          </Route>
+        </Router>
+      </div>
+    </Provider>,
     document.getElementById('container')
   );
 };
 
-bookBookStore.subscribe(render);
+//bookBookStore.subscribe(render);
+bookBookStore.dispatch({
+  type: 'SET_LIST',
+  books: books
+});
 render();

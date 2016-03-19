@@ -17,7 +17,7 @@ module.exports = {
           presets: ['react', 'es2015']
         }
       }
-  ]
+    ]
   }
   ,plugins:[
     //new webpack.optimize.UglifyJsPlugin({minimize: true}),
