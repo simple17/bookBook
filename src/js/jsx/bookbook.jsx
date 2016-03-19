@@ -1,5 +1,6 @@
 import React from 'react';
 import Book from './bookPreview.jsx';
+import TopMenu from './topMenu.jsx';
 
 export default ({
   books,
@@ -7,6 +8,7 @@ export default ({
 }) => {
   return (
     <div className='container'>
+      <TopMenu />
       <button onClick={loadMore}>Load books</button>
       <div className='row'>
         {books.map(book => (
