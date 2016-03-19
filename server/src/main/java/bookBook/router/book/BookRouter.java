@@ -36,15 +36,11 @@ public class BookRouter {
                 .path("/search")
                 .method(HttpMethod.POST).handler(rc -> {
 
-            /*
-            rc.response().putHeader("Content-Type", "application/json");
-            String id = rc.request().getParam("id");
-            eb.send("es.getUserById", id, neo4jResponse -> {
+            System.out.println("/search");
+            eb.send("neo4j.book.searchBook", new JsonObject(), neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
-            */
-            rc.response().end(responses.get(searchResponse));
         });
 
 
@@ -53,16 +49,12 @@ public class BookRouter {
                 .method(HttpMethod.POST).handler(rc -> {
 
             JsonObject json = rc.getBodyAsJson();
-
             eb.send("neo4j.book.addBook", json, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
 
             System.out.println(json.toString());
-            //rc.response().end("ок");
-
-
         });
 
         }

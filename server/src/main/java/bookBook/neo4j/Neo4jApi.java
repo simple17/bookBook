@@ -24,16 +24,20 @@ public class Neo4jApi extends AbstractVerticle {
 		 * Сохранение сотрудника в neo4j
 		 */
 		String addBookQuery = "CREATE (b:Book { props } ) return id(b)";
-		JsonObject addBookTemplate = new JsonObject()
-				 .put("query", addBookQuery)
-				 .put("params", new JsonObject());
+        String searchBookQuery = "MATCH (n:Book) RETURN n";
+		JsonObject queryTemplate = new JsonObject()
+                .put("params", new JsonObject());
 
 
+        /**
+         * Добавление книги
+         */
 		eb.consumer("neo4j.book.addBook", addBookMessage -> {
 
 			JsonObject bookData = (JsonObject) addBookMessage.body();
-			JsonObject req = new JsonObject(addBookTemplate.toString());
+			JsonObject req = new JsonObject(queryTemplate.toString());
 			req.getJsonObject("params").put("props", bookData);
+            req.put("query", addBookQuery);
 
 			eb.send("neo4j.runCypher", req, cypherResponse -> {
 
@@ -49,6 +53,31 @@ public class Neo4jApi extends AbstractVerticle {
 				 }
 			});
 		});
+
+        eb.consumer("neo4j.book.searchBook", searchBookMessage -> {
+
+            JsonObject bookData = (JsonObject) searchBookMessage.body();
+            JsonObject req = new JsonObject(queryTemplate.toString());
+            //req.getJsonObject("params").put("props", bookData);
+            req.put("query", searchBookQuery);
+
+            eb.send("neo4j.runCypher", req, cypherResponse -> {
+
+                if (cypherResponse.succeeded()) {
+                    // удачно сохранили в neo4j, надо достать и отправить id
+                    JsonObject neo4jResponseData = (JsonObject) cypherResponse.result().body();
+                    /*
+                    Integer id = neo4jResponseData.getJsonArray("data").getJsonArray(0).getInteger(0);
+                    JsonObject eventResponse = new JsonObject().put("id", id);
+                    */
+                    String resp = neo4jResponseData.toString();
+                    searchBookMessage.reply(resp);
+                } else {
+                    // сохранение с ошибкой, отправлям fail
+                    searchBookMessage.fail(0, cypherResponse.cause().getMessage());
+                }
+            });
+        });
 
 
 
