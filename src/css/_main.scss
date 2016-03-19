@@ -20,10 +20,13 @@
 
 .top-buffer { margin-top:20px; }
 
-.book-preview_title { min-height: 60px; }
+.book-preview_title {
+    min-height: 60px;
+    text-transform: uppercase;
+}
 
 .search-filter_extended {
-  padding-right: 90px;
+  //padding-right: 90px;
   text-align: right;
   text-decoration: underline;
   cursor: pointer;
@@ -193,4 +196,14 @@
 }
 .tagNotAdded{
     display: none;
+}
+.customNavBar {
+    border-radius: 0;
+    background: white;
+}
+.customBorderForPreview {
+    border-radius: 0;
+    border: 2px solid #201600;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }

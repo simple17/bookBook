@@ -5,7 +5,7 @@ export default ({}) => {
   return (
   <header className="row">
     <div className="col-xs-12">
-      <nav className="navbar navbar-default">
+      <nav className="customNavBar navbar navbar-default">
         <div className="navbar-header">
           <Link to="/">
             {<img src="img/logo.png" alt="Logo" id="topLogo"/>}
