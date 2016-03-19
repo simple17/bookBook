@@ -1,4 +1,4 @@
-package bookBook.neo4j;
+package bookBook.neo4j.map;
 
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -6,7 +6,7 @@ import io.vertx.core.json.JsonObject;
 /**
  * Created by DMitin on 19.03.2016.
  */
-public class Neo4jMapping {
+public class BookMapping {
 
     public static JsonObject mapBookById(JsonArray data) {
         JsonArray data0 = data.getJsonArray(0);

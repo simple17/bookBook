@@ -1,5 +1,6 @@
 package bookBook.neo4j;
 
+import bookBook.neo4j.map.BookMapping;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.json.JsonArray;
@@ -111,7 +112,7 @@ public class Neo4jApi extends AbstractVerticle {
                     // удачно сохранили в neo4j, надо достать и отправить id
                     JsonObject neo4jResponseData = (JsonObject) cypherResponse.result().body();
                     JsonArray data = neo4jResponseData.getJsonArray("data");
-                    JsonObject response = Neo4jMapping.mapBookById(data);
+                    JsonObject response = BookMapping.mapBookById(data);
 
                     String resp = response.toString();
                     getByIdMessage.reply(resp);
