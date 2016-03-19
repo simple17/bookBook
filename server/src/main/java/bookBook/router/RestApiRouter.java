@@ -1,6 +1,7 @@
 package bookBook.router;
 
 import bookBook.router.book.BookRouter;
+import bookBook.router.tag.TagRouter;
 import io.vertx.core.Vertx;
 import io.vertx.core.file.FileSystem;
 import io.vertx.core.http.HttpMethod;
@@ -23,6 +24,10 @@ public class RestApiRouter {
         Router bookAPI = Router.router(vertx);
         BookRouter.initBookRouter(bookAPI, vertx);
         router.mountSubRouter("/book", bookAPI);
+
+        Router tagAPI = Router.router(vertx);
+        TagRouter.initTagRouter(tagAPI, vertx);
+        router.mountSubRouter("/tag", tagAPI);
 
     }
 }
