@@ -15,7 +15,8 @@ class Preview extends React.Component {
         <p>{this.props.authors.map(a => a.name).join(', ')}</p>
         <Rating rating={this.props.rating}/>
         <button onClick={() => {
-            store.dispatch(api.GetBook(this.props.id))
+            store.dispatch(api.GetBook(this.props.id));
+            store.dispatch(api.GetTagsCloud());
             browserHistory.push(`/book/${this.props.id}`);
           }}>Подробнее</button>
       </article>

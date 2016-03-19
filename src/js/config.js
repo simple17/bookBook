@@ -3,7 +3,8 @@ export default {
     path: '192.168.33.217:8081',
     methods: {
       search: '/rest/book/search',
-      book: '/rest/book'
+      book: '/rest/book',
+      tagsCloud: '/rest/tag/all'
     }
   },
   // api: {
