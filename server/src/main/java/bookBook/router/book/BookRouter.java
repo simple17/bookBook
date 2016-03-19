@@ -22,7 +22,7 @@ public class BookRouter {
         Map<String,String> responses = new HashMap<>();
 
 
-        fs.readFile(searchResponse, res-> {
+        fs.readFile(searchResponse, res -> {
             if (res.succeeded()) {
                 System.out.println(searchResponse + " read");
                 responses.put(searchResponse, res.result().toString());
@@ -32,6 +32,9 @@ public class BookRouter {
         });
 
 
+        /*
+            Поиск книг
+         */
         router.route()
                 .path("/search")
                 .method(HttpMethod.POST).handler(rc -> {
@@ -39,11 +42,32 @@ public class BookRouter {
             System.out.println("/search");
             eb.send("neo4j.book.searchBook", new JsonObject(), neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
+                rc.response().putHeader("Access-Control-Allow-Origin", "*");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
         });
 
+        /*
+            Получить книгу по id
+         */
+        router.route()
+                .path("/:id")
+                .method(HttpMethod.POST).handler(rc -> {
 
+            Long id = Long.valueOf(rc.request().getParam("id"));
+
+            eb.send("neo4j.book.getById", id, neo4jResponse -> {
+                rc.response().putHeader("Content-type", "application/json; charset=utf-8");
+                rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                rc.response().end(neo4jResponse.result().body().toString());
+            });
+            //rc.response().end(id.toString());
+        });
+
+
+        /*
+            Добавить книгу
+         */
         router.route()
                 .path("/")
                 .method(HttpMethod.POST).handler(rc -> {
@@ -51,11 +75,14 @@ public class BookRouter {
             JsonObject json = rc.getBodyAsJson();
             eb.send("neo4j.book.addBook", json, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
+                rc.response().putHeader("Access-Control-Allow-Origin", "*");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
 
             System.out.println(json.toString());
         });
+
+
 
         }
     }
