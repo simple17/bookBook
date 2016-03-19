@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "npm install && webpack && gulp",
-    "start": "http-server"
+    "start": "http-server ./client"
   },
   "repository": {
     "type": "git",
