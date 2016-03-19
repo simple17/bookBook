@@ -23,7 +23,6 @@ public class BookRouter {
             if (res.succeeded()) {
                 System.out.println(searchResponse + " read");
                 responses.put(searchResponse, res.result().toString());
-                System.out.println(responses.get(searchResponse));
             } else {
                 System.out.println(searchResponse + " read error");
             }

@@ -11,6 +11,8 @@ public class Server extends AbstractVerticle {
     @Override
     public void start(Future<Void> fut) {
 
+        int port = config().getInteger("http.port", 8080);
+        System.out.println(port);
 
         Router router = Router.router(vertx);
         Router restAPI = Router.router(vertx);
@@ -20,8 +22,8 @@ public class Server extends AbstractVerticle {
         vertx
             .createHttpServer()
             .requestHandler(router::accept)
-            .listen(8080);
+            .listen(port);
 
-        System.out.println("Book Book server started");
+        System.out.println("Book Book server started on port: " + port);
     }
 }
