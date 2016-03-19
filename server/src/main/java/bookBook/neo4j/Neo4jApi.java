@@ -28,7 +28,8 @@ public class Neo4jApi extends AbstractVerticle {
 		String addBookQuery = "CREATE (b:Book { props } ) return id(b)";
         String searchBookQuery = "MATCH (n:Book) RETURN n";
         //String getBookById = "MATCH b WHERE id(b)={bookId}  RETURN b";
-        String getBookById = "MATCH b-[:WROTE]-a WHERE id(b)={bookId} RETURN b, collect(distinct a)";
+        //String getBookById = "MATCH b-[:WROTE]-a WHERE id(b)={bookId} RETURN b, collect(distinct a)";
+        String getBookById = "START b=NODE(3) OPTIONAL MATCH b-[:WROTE]-a OPTIONAL MATCH b-[:HAS_TAG]-t RETURN b, collect(distinct a), collect(distinct t)";
 
         String addNewAuthor = "START b=NODE({bookId}) CREATE (b)<-[:WROTE]-(a:Author {fio: {fio}}) return a";
         String addNewTag = "START b=NODE({bookId}) CREATE (b)-[:HAS_TAG]->(t:Tag {name: {name}}) return t";
@@ -116,7 +117,7 @@ public class Neo4jApi extends AbstractVerticle {
                     JsonArray data = neo4jResponseData.getJsonArray("data");
                     JsonObject response = BookMapping.mapBookById(data);
 
-                    String resp = response.toString();
+                    String resp = data.toString();
                     getByIdMessage.reply(resp);
                 } else {
                     // сохранение с ошибкой, отправлям fail
