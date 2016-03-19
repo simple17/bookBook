@@ -19,29 +19,11 @@ public class Neo4j extends AbstractVerticle {
 
 		System.out.println("START NEO4J VERTICLE");
 
-		/*
-		String body = "neo4j:neo4j";
-		Base64.Encoder e = Base64.getEncoder();
-		String encoded = e.encodeToString(body.getBytes());
+		String userName = "neo4j";
+        String pass = "secr8t";
+        String host = "localhost";
+        int port = 7474;
 
-		HttpClientOptions options = new HttpClientOptions()
-			.setDefaultPort(7474)
-			.setDefaultHost("localhost");
-
-		HttpClient neo4j = vertx.createHttpClient(options);
-		*/
-
-		String host = config().getString("neo4j.host");
-		System.out.println("neo4j хост: " + host);
-
-		int port = config().getInteger("neo4j.port");
-		System.out.println("neo4j порт: " + port);
-
-		String userName = config().getString("neo4j.user");
-		System.out.println("имя пользователя: " + userName);
-
-		String pass = config().getString("neo4j.newPassword");
-		System.out.println("пароль: " + pass);
 
 		String authStr = userName + ":" + pass;
 		Base64.Encoder e = Base64.getEncoder();
@@ -61,7 +43,7 @@ public class Neo4j extends AbstractVerticle {
 				// Now all the body has been read
 				int status = resp.statusCode();
 				if (status == 200) {
-					System.out.println("Подключено к neo4j");
+					System.out.println("BookBook подключен к neo4j");
 				} else {
 					System.out.println("Не удалось подключиться к neo4j с именем пользователя: " + userName
 							+ " и паролём: " + pass);
