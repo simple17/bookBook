@@ -2,7 +2,8 @@ import React from 'react';
 import api from '../api.js';
 import Rating from './rating.jsx';
 import Config from '../config.js';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import TagsCloud from './tagsCloud.jsx';
 
 class Book extends React.Component {
 
@@ -30,19 +31,16 @@ class Book extends React.Component {
           </div>
           <div className="col-xs-3">
             <h4>Добавить тэги:</h4>
-            <ul>
-              {
-                tags.map(t => (
-                  <li
-                    key={t.id}
-                    onClick={()=>{
-                      //store.dispatch(api.AddTagToBook(book.id, t));
-                    }}>
-                    {t.name}
-                  </li>
-                ))
-              }
-            </ul>
+            <TagsCloud
+              tags={tags}
+              bookTags={book.tags}
+              select={(e) => {
+                e.preventDefault();
+              }}
+              disselect={(e) => {
+                e.preventDefault();
+              }}
+              />
           </div>
         </article>
       </div>
