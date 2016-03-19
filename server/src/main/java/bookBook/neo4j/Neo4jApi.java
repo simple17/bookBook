@@ -24,16 +24,18 @@ public class Neo4jApi extends AbstractVerticle {
 		 * Сохранение сотрудника в neo4j
 		 */
 		String addBookQuery = "CREATE (b:Book { props } ) return id(b)";
-		JsonObject addBookTemplate = new JsonObject()
-				 .put("query", addBookQuery)
-				 .put("params", new JsonObject());
+		JsonObject queryTemplate = new JsonObject()
+				 //.put("query", addBookQuery)
+                .put("query", "")
+                .put("params", new JsonObject());
 
 
 		eb.consumer("neo4j.book.addBook", addBookMessage -> {
 
 			JsonObject bookData = (JsonObject) addBookMessage.body();
-			JsonObject req = new JsonObject(addBookTemplate.toString());
+			JsonObject req = new JsonObject(queryTemplate.toString());
 			req.getJsonObject("params").put("props", bookData);
+            req.put("query", addBookQuery);
 
 			eb.send("neo4j.runCypher", req, cypherResponse -> {
 
