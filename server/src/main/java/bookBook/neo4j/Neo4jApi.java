@@ -81,19 +81,14 @@ public class Neo4jApi extends AbstractVerticle {
             Получит книгу по id
          */
         eb.consumer("neo4j.book.getById", getByIdMessage -> {
-
-
             Long id = (Long) getByIdMessage.body();
-            JsonObject idJson = new JsonObject();
-            idJson.put("bookId", id);
-            //Long id = bookData.getLong("id");
+
             JsonObject req = new JsonObject(queryTemplate.toString());
 
-            req.getJsonObject("params").put("props", idJson);
+            req.getJsonObject("params").put("bookId", id);
             req.put("query", getBookById);
-            System.out.println("neo4j.book.getById --> " + id);
-            //getByIdMessage.reply("ok");
 
+            System.out.println("neo4j.book.getById: " + req);
             eb.send("neo4j.runCypher", req, cypherResponse -> {
 
                 if (cypherResponse.succeeded()) {
@@ -106,14 +101,7 @@ public class Neo4jApi extends AbstractVerticle {
                     getByIdMessage.fail(0, cypherResponse.cause().getMessage());
                 }
             });
-
-
         });
-
-
-
-
-
 	}
 
 }
