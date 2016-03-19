@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import Book from './bookPreview.jsx';
 import TopMenu from './topMenu.jsx';
 import SearchFilter from './searchFilter.jsx';
 
-export default ({
+const List = ({
   books,
   loadMore
 }) => {
@@ -29,3 +30,7 @@ export default ({
     </div>
   );
 };
+
+export default connect(
+  state => ({ books: state.books })
+)(List);
