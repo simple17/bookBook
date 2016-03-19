@@ -13,6 +13,8 @@ public class TagMapping {
             JsonArray dataItemJson = (JsonArray) dataItem;
             //System.out.println("dataItemJson: " + dataItemJson);
             JsonObject data0 = dataItemJson.getJsonObject(0);
+            tagsMapped.add(data0);
+            /*
             System.out.println("data0: " + data0);
 
 
@@ -20,6 +22,7 @@ public class TagMapping {
             tagJsonMapped.put("id", data0.getJsonObject("metadata").getLong("id"));
             tagJsonMapped.put("name", data0.getJsonObject("data").getString("name"));
             tagsMapped.add(tagsMapped);
+            */
 
 
 
