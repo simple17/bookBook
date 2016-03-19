@@ -20,27 +20,13 @@ class Book extends React.Component {
           </div>
           <div className="col-xs-6">
             <h2>{book.title}</h2>
-            <p>Авторы: {book.authors.map(a => a.name).join(', ')}</p>
-            <h3>Комментарий: </h3>
+            <p>Авторы: {book.authors.map(a => a.fio).join(', ')}</p>
+            {book.comments.length ? (<h3>Комментарий: </h3>) : ''}
             {
               book.comments.map(c => (
                 <p key={c.id}>"{c.text}"</p>
               ))
             }
-            <h3>Тэги</h3>
-            <ul>
-              {
-                book.tags.map(t => (
-                  <li
-                    key={t.id}
-                    onClick={()=>{
-
-                    }}>
-                    {t.name}
-                  </li>
-                ))
-              }
-            </ul>
           </div>
           <div className="col-xs-3">
             <h4>Добавить тэги:</h4>
