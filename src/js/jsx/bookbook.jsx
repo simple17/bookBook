@@ -13,6 +13,7 @@ export default ({
       <div className='row'>
         {books.map(book => (
           <Book
+            key={book.id}
             name={book.name}
             author={book.author}
             rating={book.rating}
