@@ -15,7 +15,7 @@ class Filter extends React.Component {
         }} className="col-md-1 glyphicon glyphicon-search"></span>
       </div>
       <div class="row">
-        <span>Расширенный поиск</span>
+        <p className="search-filter_extended">Расширенный поиск <span className="glyphicon glyphicon-triangle-right"/></p>
       </div>
     </div>
 
