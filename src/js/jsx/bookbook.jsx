@@ -1,20 +1,26 @@
 import React from 'react';
+import Book from './bookPreview.jsx';
 
 export default ({
   books,
   loadMore
 }) => {
   return (
-    <div>
+    <div className='container'>
       <button onClick={loadMore}>Load books</button>
-      <ul>
+      <div className='row'>
         {books.map(book => (
-          <li>
-            {book.name}
-          </li>
+          <Book
+            name={book.name}
+            author={book.author}
+            rating={book.rating}
+            readMore={(e)=>{
+              e.preventDefault();
+            }}
+          />
           )
         )}
-      </ul>
+      </div>
     </div>
   );
 };

@@ -9,13 +9,36 @@ import mainReducer from './reducers/mainReducer.js';
 const bookBookStore = createStore(mainReducer);
 
 let books = [
-  {name: 'test1'},
-  {name: 'test2'},
-  {name: 'test3'},
-  {name: 'test4'},
-  {name: 'test5'},
-  {name: 'test6'},
-  {name: 'test7'}
+  {
+    name: 'test1',
+    rating: 0,
+    author: 'testAuthor',
+    picture: null
+  },
+  {
+    name: 'test1',
+    rating: 2,
+    author: 'testAuthor',
+    picture: null
+  },
+  {
+    name: 'test1',
+    rating: 5,
+    author: 'testAuthor',
+    picture: null
+  },
+  {
+    name: 'test1',
+    rating: 3,
+    author: 'testAuthor',
+    picture: null
+  },
+  {
+    name: 'test1',
+    rating: 5,
+    author: 'testAuthor',
+    picture: null
+  }
 ];
 
 
