@@ -63,6 +63,7 @@ public class BookRouter {
             eb.send("neo4j.book.searchBook", json, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
 
@@ -86,6 +87,7 @@ public class BookRouter {
             eb.send("neo4j.book.getById", id, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
             /*
@@ -108,6 +110,7 @@ public class BookRouter {
             eb.send("neo4j.book.addBook", json, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
 
@@ -135,6 +138,7 @@ public class BookRouter {
                 eb.send("neo4j.book.addNewAuthor", data, neo4jResponse -> {
                     rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                     rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                    rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                     rc.response().end(neo4jResponse.result().body().toString());
                 });
             } else {
@@ -148,7 +152,7 @@ public class BookRouter {
          */
         router.route()
                 .path("/:id/tag")
-                .method(HttpMethod.PUT).handler(rc -> {
+                .method(HttpMethod.POST).handler(rc -> {
 
 
             Long id = Long.valueOf(rc.request().getParam("id"));
@@ -165,6 +169,7 @@ public class BookRouter {
                 eb.send("neo4j.book.addNewTag", data, neo4jResponse -> {
                     rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                     rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                    rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                     rc.response().end(neo4jResponse.result().body().toString());
                 });
 
@@ -176,6 +181,7 @@ public class BookRouter {
                 eb.send("neo4j.book.addExistingTag", data, neo4jResponse -> {
                     rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                     rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                    rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                     rc.response().end(neo4jResponse.result().body().toString());
                 });
             }

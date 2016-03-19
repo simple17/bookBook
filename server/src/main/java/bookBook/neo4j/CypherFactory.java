@@ -62,6 +62,9 @@ public class CypherFactory {
         }
 
         startQuery.match(paths.toArray(new Path[paths.size()]));
+        if(paths.isEmpty()) {
+            startQuery.match(node(bookLetter).label("Book"));
+        }
         startQuery.returns(identifier(bookLetter));
 
         System.out.println(startQuery);
