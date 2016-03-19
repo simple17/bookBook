@@ -52,16 +52,18 @@ public class BookRouter {
 
             System.out.println("/search");
 
+            /*
             eb.send("neo4j.book.searchBook", new JsonObject(), neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
+            */
 
-            /*
+
             rc.response().putHeader("Access-Control-Allow-Origin", "*");
             rc.response().end(responses.get(searchResponse));
-            */
+
         });
 
         /*
@@ -161,7 +163,14 @@ public class BookRouter {
 
                 //rc.response().end("ok");
             } else {
-                rc.response().end("NOT IMPLEMENTED");
+                String tagId = json.getString("id");
+                data.put("bookId", id);
+                data.put("tagId", id);
+                eb.send("neo4j.book.addExistingTag", data, neo4jResponse -> {
+                    rc.response().putHeader("Content-type", "application/json; charset=utf-8");
+                    rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                    rc.response().end(neo4jResponse.result().body().toString());
+                });
             }
         });
 

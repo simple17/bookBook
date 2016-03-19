@@ -9,14 +9,21 @@ import io.vertx.core.json.JsonObject;
 public class BookMapping {
 
     public static JsonObject mapBookById(JsonArray data) {
+        System.out.println("mapBookById: " + data);
         JsonArray data0 = data.getJsonArray(0);
         JsonObject book = data0.getJsonObject(0);
         JsonArray authors = data0.getJsonArray(1);
+        JsonArray tags = data0.getJsonArray(2);
 
         JsonObject bookMapped =  mapBook(book);
         JsonArray authorsMapped = mapAuthors(authors);
         bookMapped.put("authors", authorsMapped);
+/*
+        JsonArray tagsMapped = mapTags(tags);
+        bookMapped.put("tags", tagsMapped);
         System.out.println(book);
+*/
+        bookMapped.put("comments", new JsonArray());
         return bookMapped;
     }
 
@@ -31,6 +38,13 @@ public class BookMapping {
         bookJson.put("id", id);
         bookJson.put("title", title);
         return bookJson;
+    }
+
+
+    public static JsonArray mapTags(JsonArray authors){
+        System.out.println("tags: " + authors);
+        JsonArray authorsMapped = new JsonArray();
+        return authorsMapped;
     }
 
     public static JsonArray mapAuthors(JsonArray authors){

@@ -40,18 +40,18 @@ public class TagRouter {
 
             System.out.println("/tag/all");
 
-/*
+
             eb.send("neo4j.book.getAllTags", new JsonObject(), neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
-*/
 
 
+/*
             rc.response().putHeader("Access-Control-Allow-Origin", "*");
             rc.response().end(responses.get(allTags));
-
+*/
 
             //rc.response().end("ok");
         });
