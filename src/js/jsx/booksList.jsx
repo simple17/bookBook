@@ -14,9 +14,11 @@ const List = ({
         {books.map(book => (
           <Book
             key={book.id}
+            id={book.id}
             title={book.title}
             author={book.author}
             rating={book.rating}
+            picture={book.imageUrl}
             readMore={(e)=>{
               e.preventDefault();
             }}

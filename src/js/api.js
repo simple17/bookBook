@@ -41,19 +41,30 @@ var testSearch ={
 
 var loadBooks = (params) => {
     return dispatch => {
-  //     fetch(`//${Config.api.path}${Config.api.methods.search}`, {
-  // method: 'post'})
-  //     .then(function(response) {
-  //       return response.json()
-  //     }).then(function(data) {
-  //       console.log(data.data);
-  //     })
+      fetch(`//${Config.api.path}${Config.api.methods.search}`, {
+  method: 'post'})
+      .then(function(response) {
+        return response.json()
+      }).then(function(data) {
+        if(data.length){
+          dispatch({
+            type: 'SET_LIST',
+            books: data.data
+          });
+        } else{
+          dispatch({
+            type: 'SET_LIST',
+            books: []
+          });
+        }
+
+      })
 
 
-      dispatch({
-        type: 'SET_LIST',
-        books: testSearch.data
-      });
+      // dispatch({
+      //   type: 'SET_LIST',
+      //   books: testSearch.data
+      // });
     }
   };
 

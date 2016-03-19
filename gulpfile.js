@@ -21,6 +21,10 @@ gulp.task('deliveryFonts', function(){
       .pipe(gulp.dest('./client/fonts'));
 });
 
-gulp.task('delivery', ['deliveryHtml', 'deliveryCss', 'deliveryFonts', 'deliveryJs']);
+gulp.task('deliveryImages', function(){
+  gulp.src('./src/img/*.*').pipe(gulp.dest('./client/img'));
+});
+
+gulp.task('delivery', ['deliveryHtml', 'deliveryCss', 'deliveryFonts', 'deliveryImages', 'deliveryJs']);
 
 gulp.task('default', ['delivery']);
