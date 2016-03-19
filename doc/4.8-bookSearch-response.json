@@ -2,7 +2,7 @@
 	"length": 2,
 	"data": [
 		{
-			"id": 0
+			"id": 0,
 			"imageUrl":  "/images/image1.jpg",
 			"title": "Приключения Пиноккио",
 			"rating": 3,
@@ -11,7 +11,7 @@
 				{"id": 5, "name": "Название тэга2"}
 			]
 		},{
-			"id": 1
+			"id": 1,
 			"imageUrl":  "/images/image2.jpg",
 			"title": "Приключения Пиноккио в стране сказок",
 			"rating": 5,
