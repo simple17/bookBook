@@ -43,8 +43,49 @@ var loadBook = (id) => {
   };
 };
 
+var loadTagsCloud = () => {
+  return dispatch => {
+    fetch(`//${Config.api.path}${Config.api.methods.tagsCloud}`, { method: 'get'})
+    .then(function(response) {
+      return response.json()
+    }).then(function(data) {
+      if(data.length){
+        dispatch({
+          type: 'UPDATE_TAGS',
+          tags: data
+        });
+      }
+    });
+
+  };
+};
+
+var addTagToBook = (bookId, tag) => {
+  return dispatch => {
+    // fetch(`//${Config.api.path}${Config.api.methods.tagsCloud}`, { method: 'post'})
+    // .then(function(response) {
+    //   return response.json()
+    // }).then(function(data) {
+    //   if(data.length){
+    //     dispatch({
+    //       type: 'ADD_TAG_TO_BOOK',
+    //       tag: tag,
+    //       bookId: bookId
+    //     });
+    //   }
+    // });
+
+    dispatch({
+      type: 'ADD_TAG_TO_BOOK',
+      tag: tag,
+      bookId: bookId
+    });
+  };
+};
 
 export default {
   Search: loadBooks,
-  GetBook: loadBook
+  GetBook: loadBook,
+  GetTagsCloud: loadTagsCloud,
+  AddTagToBook: addTagToBook
 };
