@@ -5,6 +5,7 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.StaticHandler;
 
 public class Server extends AbstractVerticle {
 
@@ -21,6 +22,7 @@ public class Server extends AbstractVerticle {
         Router restAPI = Router.router(vertx);
         RestApiRouter.initRestRouter(restAPI, vertx);
         router.mountSubRouter("/rest", restAPI);
+        router.route("/images/*").handler(StaticHandler.create());
 
         vertx
             .createHttpServer()
