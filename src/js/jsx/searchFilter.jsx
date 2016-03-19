@@ -5,7 +5,7 @@ class Filter extends React.Component {
   render(){
     const {store} = this.context;
     return (
-    <div className="form-group">
+    <div className="row">
       <div className="col-md-11">
         <input type="text" className="form-control" id="txtSearch" />
       </div>
