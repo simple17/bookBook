@@ -25,7 +25,8 @@ public class Neo4jApi extends AbstractVerticle {
 		 */
 		String addBookQuery = "CREATE (b:Book { props } ) return id(b)";
         String searchBookQuery = "MATCH (n:Book) RETURN n";
-        String getBookById = "MATCH b	WHERE id(b)={bookId}  RETURN b";
+        String getBookById = "MATCH b WHERE id(b)={bookId}  RETURN b";
+        String addNewAuthor = "START b=NODE({bookId}) CREATE (b)<-[:WROTE]-(a:Author {name: {fio}}) return a";
 		JsonObject queryTemplate = new JsonObject()
                 .put("params", new JsonObject());
 
@@ -35,7 +36,16 @@ public class Neo4jApi extends AbstractVerticle {
          */
 		eb.consumer("neo4j.book.addBook", addBookMessage -> {
 
-			JsonObject bookData = (JsonObject) addBookMessage.body();
+
+            JsonObject bookData = (JsonObject) addBookMessage.body();
+/*
+            String title = bookData.getString("title");
+            System.out.println("title: " + title);
+            JsonArray authors = bookData.getJsonArray("authors");
+            System.out.println("authors: " + authors);
+            String query = CypherFactory.createQuery(title, authors, null);
+*/
+
 			JsonObject req = new JsonObject(queryTemplate.toString());
 			req.getJsonObject("params").put("props", bookData);
             req.put("query", addBookQuery);
@@ -81,18 +91,44 @@ public class Neo4jApi extends AbstractVerticle {
             Получит книгу по id
          */
         eb.consumer("neo4j.book.getById", getByIdMessage -> {
-
-
             Long id = (Long) getByIdMessage.body();
-            JsonObject idJson = new JsonObject();
-            idJson.put("bookId", id);
-            //Long id = bookData.getLong("id");
+
             JsonObject req = new JsonObject(queryTemplate.toString());
 
-            req.getJsonObject("params").put("props", idJson);
+            req.getJsonObject("params").put("bookId", id);
             req.put("query", getBookById);
-            System.out.println("neo4j.book.getById --> " + id);
-            //getByIdMessage.reply("ok");
+
+            System.out.println("neo4j.book.getById: " + req);
+            eb.send("neo4j.runCypher", req, cypherResponse -> {
+
+                if (cypherResponse.succeeded()) {
+                    // удачно сохранили в neo4j, надо достать и отправить id
+                    JsonObject neo4jResponseData = (JsonObject) cypherResponse.result().body();
+                    String resp = neo4jResponseData.toString();
+                    getByIdMessage.reply(resp);
+                } else {
+                    // сохранение с ошибкой, отправлям fail
+                    getByIdMessage.fail(0, cypherResponse.cause().getMessage());
+                }
+            });
+        });
+
+
+        /*
+            Добавить нового автора
+         */
+        eb.consumer("neo4j.book.addNewAuthor", getByIdMessage -> {
+            JsonObject data = (JsonObject) getByIdMessage.body();
+            System.out.println("neo4j.book.addNewAuthor: " + data);
+
+            JsonObject req = new JsonObject(queryTemplate.toString());
+
+
+            req.getJsonObject("params").put("bookId", data.getLong("bookId"));
+            req.getJsonObject("params").put("fio", data.getString("fio"));
+            req.put("query", addNewAuthor);
+
+            System.out.println("neo4j.book.getById: " + req);
 
             eb.send("neo4j.runCypher", req, cypherResponse -> {
 
@@ -108,12 +144,8 @@ public class Neo4jApi extends AbstractVerticle {
             });
 
 
+            //getByIdMessage.reply("ok");
         });
-
-
-
-
-
 	}
 
 }
