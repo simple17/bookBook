@@ -8,8 +8,8 @@ export default function App({ children }) {
     <div className="container-fluid">
         <TopMenu />
     </div>
-    <div className="container" style={{ marginTop: '1.5em' }}>
-        <h1 className="col-xs-12">МОЯ БИБЛИОТЕКА</h1>
+    <div className="container">
+        <h1>МОЯ БИБЛИОТЕКА</h1>
         {children}
     </div>
   </div>
