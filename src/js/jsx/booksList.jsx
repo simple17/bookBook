@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import Book from './bookPreview.jsx';
-import TopMenu from './topMenu.jsx';
 import SearchFilter from './searchFilter.jsx';
 
 const List = ({
@@ -9,9 +8,7 @@ const List = ({
   loadMore
 }) => {
   return (
-    <div className='container'>
-      <TopMenu />
-      <h1>Моя библиотека</h1>
+    <div className=''>
       <SearchFilter loadMore={loadMore}/>
       <div className='row'>
         {books.map(book => (
@@ -32,5 +29,5 @@ const List = ({
 };
 
 export default connect(
-  state => ({ books: state.books })
+  state => ({ books: state.booksList })
 )(List);

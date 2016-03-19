@@ -1,21 +1,13 @@
 import React from 'react';
-import { Link, browserHistory } from 'react-router';
+import TopMenu from './topmenu.jsx';
 
 export default function App({ children }) {
   return (
-    <div>
-      <header>
-        Links:
-        {' '}
-        <Link to="/">Home</Link>
-        {' '}
-        <Link to="/book">Book</Link>
-        {' '}
-        <Link to="/modify-book">Modify</Link>
+    <div className="container">
+      <header className="row">
+        <h1 className="col-xs-12">Моя библиотека</h1>
+        <TopMenu />
       </header>
-      <div>
-        <button onClick={() => browserHistory.push('/book')}>Go to /foo</button>
-      </div>
       <div style={{ marginTop: '1.5em' }}>{children}</div>
     </div>
   )

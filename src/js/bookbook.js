@@ -6,8 +6,6 @@ import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
-
-// import BookBookApp from './jsx/bookbook.jsx';
 import mainReducer from './reducers/mainReducer.js';
 
 const bookBookStore = createStore(mainReducer, applyMiddleware(thunk));
@@ -77,17 +75,7 @@ const TestComponent = ({children}) => {
 //     bookBookStore.dispatch(testAsync());
 //   }}/>
 //
-// <Provider store={bookBookStore}>
-//   <div>
-//     <Router history={history}>
-//       <Route path="/" component={TestComponent}>
-//         <IndexRoute component={TestComponent}/>
-//         <Route path="book" component={TestComponent}/>
-//         <Route path="modify-book" component={TestComponent}/>
-//       </Route>
-//     </Router>
-//   </div>
-// </Provider>
+
 
 import App from './jsx/app.jsx';
 import BooksList from './jsx/booksList.jsx';
@@ -97,7 +85,8 @@ const render = () => {
     <Provider store={bookBookStore}>
       <div>
         <Router history={history}>
-          <Route path="/client" component={App}>
+          <Route path="/" component={App}>
+            <IndexRoute component={BooksList}/>
             <Route path="list" component={BooksList}/>
           </Route>
         </Router>
