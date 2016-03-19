@@ -15,6 +15,7 @@ const history = syncHistoryWithStore(browserHistory, bookBookStore)
 import App from './jsx/app.jsx';
 import BooksList from './jsx/booksList.jsx';
 import About from './jsx/about.jsx';
+import Book from './jsx/book.jsx';
 
 const render = () => {
   ReactDOM.render(
@@ -24,6 +25,9 @@ const render = () => {
           <Route path="/" component={App}>
             <IndexRoute component={BooksList}/>
             <Route path="list" component={BooksList}/>
+            <Route path="book" component={Book}>
+              <Route path="/book/:bookId" component={Book}/>
+            </Route>
             <Route path="About" component={About}/>
           </Route>
         </Router>
@@ -33,9 +37,4 @@ const render = () => {
   );
 };
 
-//bookBookStore.subscribe(render);
-// bookBookStore.dispatch({
-//   type: 'SET_LIST',
-//   books: books
-// });
 render();
