@@ -8,6 +8,7 @@ gulp.task('deliveryHtml', function(){
 gulp.task('deliveryCss', function(){
   gulp.src('./node_modules/bootstrap/dist/css/bootstrap.min.css')
       .pipe(gulp.dest('./client/css'));
+  gulp.src('./src/css/main.css').pipe(gulp.dest('./client/css'));
 });
 
 gulp.task('deliveryFonts', function(){
