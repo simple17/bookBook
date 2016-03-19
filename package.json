@@ -7,8 +7,8 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm install && webpack && gulp"
+    "build": "npm install && webpack && gulp",
+    "start": "http-server"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "bootstrap": "^3.3.6",
     "gulp": "^3.9.1",
     "gulp-sass": "^2.2.0",
+    "http-server": "^0.9.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "redux": "^3.3.1",
