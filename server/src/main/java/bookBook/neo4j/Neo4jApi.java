@@ -34,7 +34,7 @@ public class Neo4jApi extends AbstractVerticle {
 
         String addNewAuthor = "START b=NODE({bookId}) CREATE (b)<-[:WROTE]-(a:Author {fio: {fio}}) return a";
         String addNewTag = "START b=NODE({bookId}) CREATE (b)-[:HAS_TAG]->(t:Tag {name: {name}}) return t";
-        String addExistingTag = "START b=NODE({bookId}) CREATE (b)-[:HAS_TAG]->(t:Tag {name: {name}}) return t";
+        String addExistingTag = "START b=NODE({bookId}), t=NODE({tagId}) CREATE (b)-[:HAS_TAG]->(t) return t";
 		JsonObject queryTemplate = new JsonObject()
                 .put("params", new JsonObject());
 
@@ -202,7 +202,7 @@ public class Neo4jApi extends AbstractVerticle {
 
             req.getJsonObject("params").put("bookId", data.getLong("bookId"));
             req.getJsonObject("params").put("tagId", data.getLong("tagId"));
-            req.put("query", addNewTag);
+            req.put("query", addExistingTag);
 
             System.out.println("neo4j.book.addExistingTag: " + req);
 

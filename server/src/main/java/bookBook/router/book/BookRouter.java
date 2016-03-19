@@ -150,7 +150,7 @@ public class BookRouter {
             System.out.println("json: " + json);
 
             JsonObject data = new JsonObject();
-            if (json.getString("id") == null) {
+            if (json.getLong("id") == null) {
                 data.put("bookId", id);
                 data.put("name", json.getString("name"));
                 System.out.println("data: " + data);
@@ -163,9 +163,9 @@ public class BookRouter {
 
                 //rc.response().end("ok");
             } else {
-                String tagId = json.getString("id");
+                Long tagId = json.getLong("id");
                 data.put("bookId", id);
-                data.put("tagId", id);
+                data.put("tagId", tagId);
                 eb.send("neo4j.book.addExistingTag", data, neo4jResponse -> {
                     rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                     rc.response().putHeader("Access-Control-Allow-Origin", "*");
