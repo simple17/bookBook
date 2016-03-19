@@ -9,7 +9,7 @@ export default ({
   picture
 }) => {
   return (
-    <article className="col-xs-4">
+    <article className="col-xs-3">
       <h3>{name}</h3>
       <p>{author}</p>
       <Rating rating={rating}/>
