@@ -194,7 +194,7 @@ public class BookRouter {
          */
         router.route()
                 .path("/:bookId/tag/:tagId")
-                .method(HttpMethod.DELETE).handler(rc -> {
+                .method(HttpMethod.POST).handler(rc -> {
 
 
             JsonObject queryData = new JsonObject();
