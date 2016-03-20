@@ -2,10 +2,8 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 
 gulp.task('deliveryHtml', function(){
-  gulp.src('./src/index.html')
+  gulp.src('./src/*.html')
       .pipe(gulp.dest('./client'));
-      gulp.src('./src/login.html')
-          .pipe(gulp.dest('./client'));
 });
 
 gulp.task('deliveryJs', function(){
