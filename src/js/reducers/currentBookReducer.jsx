@@ -24,6 +24,10 @@ export default (state = Object.assign({}, defaultState), action) => {
       break;
     case 'CLEAR_CURRENT_BOOK':
       return Object.assign({}, defaultState);
+    case 'ADD_TAG_TO_CURRENT_BOOK':
+      return Object.assign({}, state, {
+        tags: [...state.tags, {id: action.id, name: action.name}]
+      });
     default:
       return state;
   }
