@@ -54,11 +54,7 @@ public class BookRouter {
                 .method(HttpMethod.POST).handler(rc -> {
 
             System.out.println("/search");
-
             JsonObject json = rc.getBodyAsJson();
-            //CypherFactory.createQuery("", tags);
-
-
 
             eb.send("neo4j.book.searchBook", json, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
@@ -191,6 +187,55 @@ public class BookRouter {
                     rc.response().end(neo4jResponse.result().body().toString());
                 });
             }
+        });
+
+        /*
+            Удалить тэг у книги
+         */
+        router.route()
+                .path("/:bookId/tag/:tagId")
+                .method(HttpMethod.DELETE).handler(rc -> {
+
+
+            JsonObject queryData = new JsonObject();
+            Long bookId = Long.valueOf(rc.request().getParam("bookId"));
+            queryData.put("bookId", bookId);
+            System.out.println("id: " + bookId);
+            Long tagId = Long.valueOf(rc.request().getParam("tagId"));
+            queryData.put("tagId", tagId);
+            System.out.println("tagId: " + tagId);
+
+            eb.send("neo4j.book.deleteTag", queryData, neo4jResponse -> {
+                rc.response().putHeader("Content-type", "application/json; charset=utf-8");
+                rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                rc.response().end(neo4jResponse.result().body().toString());
+            });
+
+            //rc.response().end("ok");
+        });
+
+        router.route()
+                .path("/:bookId/rating/:ratingVal")
+                .method(HttpMethod.POST).handler(rc -> {
+
+
+            JsonObject queryData = new JsonObject();
+            Long bookId = Long.valueOf(rc.request().getParam("bookId"));
+            queryData.put("bookId", bookId);
+            System.out.println("bookId: " + bookId);
+            Long ratingVal = Long.valueOf(rc.request().getParam("ratingVal"));
+            queryData.put("ratingVal", ratingVal);
+            System.out.println("ratingVal: " + ratingVal);
+
+            eb.send("neo4j.book.setRating", queryData, neo4jResponse -> {
+                rc.response().putHeader("Content-type", "application/json; charset=utf-8");
+                rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                rc.response().end(neo4jResponse.result().body().toString());
+            });
+
+            //rc.response().end("ok");
         });
 
 
