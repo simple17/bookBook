@@ -35,11 +35,10 @@ class Book extends React.Component {
               tags={tags}
               bookTags={book.tags}
               select={(tagId) => {
-                store.dispatch(api.AddTagToBook(book.id, tagId));  
+                store.dispatch(api.AddTagToBook(book.id, tagId));
               }}
-              disselect={(e) => {
-                console.log("in disselect " + e );
-                e.preventDefault();
+              disselect={(tagId) => {
+                store.dispatch(api.RemoveTagFromBook(book.id, tagId)); 
               }}
               addTag={(value) => {
                 console.log(value + "  " + book.id);

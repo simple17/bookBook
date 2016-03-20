@@ -3,13 +3,7 @@ import Config from './config.js';
 var loadBooks = (params) => {
   return dispatch => {
     fetch(`//${Config.api.path}${Config.api.methods.search}`, { method: 'post',
-            body: JSON.stringify({
-              "name": "111",
-              "tags": [
-                {"id": 1},
-                {"id": 2}
-              ]
-            })
+            body: JSON.stringify(params)
     })
     .then(function(response) {
       return response.json()
@@ -17,10 +11,10 @@ var loadBooks = (params) => {
       if(data.data.length){
         dispatch({
           type: 'SET_LIST',
-          books: data.data[0].map(b => {
+          books: data.data.map(b => {
             return {
-              id: b.metadata.id,
-              title: b.data.title
+              id: b[0].metadata.id,
+              title: b[0].data.title
 
             };
           })
@@ -139,8 +133,25 @@ var addTagToBook = (bookId, tagId) => {
         id: tag.metadata.id
       });
     });
+  };
+};
 
-
+var removeTagFromBook = (bookId, tagId) => {
+  return dispatch => {
+    fetch(`//${Config.api.path}/rest/book/${bookId}/tag/${tagId}`,
+      {
+        method: 'post'
+      }
+    )
+    .then(function(response) {
+      return response.json()
+    }).then(function(data) {
+      // var tag = data.data[0][0];
+      dispatch({
+        type: 'REMOVE_TAG_FROM_CURRENT_BOOK',
+        id: tagId
+      });
+    });
   };
 };
 
@@ -149,5 +160,6 @@ export default {
   GetBook: loadBook,
   GetTagsCloud: loadTagsCloud,
   CreateTag: createTag,
-  AddTagToBook: addTagToBook
+  AddTagToBook: addTagToBook,
+  RemoveTagFromBook: removeTagFromBook
 };
