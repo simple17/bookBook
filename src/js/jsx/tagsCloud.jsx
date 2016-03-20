@@ -8,7 +8,7 @@ export default ({tags, bookTags, select, disselect, addTag}) => {
         <input className="customInput" ref={input => {
             inputRef = input;
           }}/>
-        <button class="customButton" onClick={() => {
+        <button className="customButton customButton_tag-cloud" onClick={() => {
             if(!inputRef.value)
             {
               return;
@@ -16,7 +16,7 @@ export default ({tags, bookTags, select, disselect, addTag}) => {
             addTag(inputRef.value);
             inputRef.value = '';
           }}><span className="glyphicon glyphicon-plus"></span></button>
-        <div>
+        <div className="tag-cloud-list">
           {tags.map(tag => {
             let selected = bookTags.filter(t => tag.id === t.id).length ? true : false;
             let aClass = classNames('tagButton', 'btn', 'btn-default', 'btn-xs', selected ? 'tagButtonAdd' : '');

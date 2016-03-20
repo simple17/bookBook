@@ -34,7 +34,7 @@ class Book extends React.Component {
             </div>
             <div className="col-xs-6">
               <h2>{book.title}</h2>
-              <p>Авторы: {book.authors.map(a => a.fio).join(', ')}</p>
+              <p>Автор: {book.author}</p>
               {book.comments.length ? (<h3>Комментарий: </h3>) : ''}
               {
                 book.comments.map(c => (

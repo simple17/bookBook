@@ -133,6 +133,13 @@
     /*border-bottom: 5px solid #201600;*/
     /*border-right: 5px solid #201600;*/
 }
+
+.customButton_tag-cloud{
+  span{
+    font-size:14px;
+  }
+}
+
 .customLabel {
     color: #201600;
     font-size: 18pt;
@@ -147,6 +154,10 @@
     background-color: white;
     background: white;
     margin: 2px;
+}
+
+.tag-cloud-list{
+  margin: 15px 0;
 }
 
 .tagButton:hover {
