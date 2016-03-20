@@ -82,7 +82,8 @@ public class Neo4jApi extends AbstractVerticle {
             JsonObject req = new JsonObject(queryTemplate.toString());
             //req.getJsonObject("params").put("props", bookData);
             JsonArray tags = searchData.getJsonArray("tags");
-            String query = CypherFactory.createQuery("", tags);
+            String name = searchData.getString("name");
+            String query = CypherFactory.createQuery(name, tags);
             req.put("query", query);
 
             System.out.println("neo4j.book.searchBook: " + req);
