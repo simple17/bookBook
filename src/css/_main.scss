@@ -148,6 +148,7 @@
 }
 .tagButton {
     border-radius: 0;
+    font-size: 10pt !important;
     border: 2px solid #201600;
     color: #201600;
     font-size: 14pt;
@@ -294,4 +295,7 @@
 }
 #reviewStars-input #star-5 {
     left: 265px;
+}
+.customPlus {
+    font-size: inherit;
 }
