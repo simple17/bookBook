@@ -34,10 +34,11 @@ class Book extends React.Component {
             <TagsCloud
               tags={tags}
               bookTags={book.tags}
-              select={(e) => {
-                e.preventDefault();
+              select={(tagId) => {
+                store.dispatch(api.AddTagToBook(book.id, tagId));  
               }}
               disselect={(e) => {
+                console.log("in disselect " + e );
                 e.preventDefault();
               }}
               addTag={(value) => {

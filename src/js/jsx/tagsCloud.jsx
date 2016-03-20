@@ -18,7 +18,7 @@ export default ({tags, bookTags, select, disselect, addTag}) => {
             let aClass = classNames('tagButton', 'btn', 'btn-default', selected ? 'tagButtonAdd' : '');
             let spanClass = classNames('glyphicon', 'glyphicon-ok', !selected ? 'tagNotAdded' : '');
             return (
-                <a className={aClass}>{tag.name} <span className={spanClass} aria-hidden="true"></span></a>
+                <a className={aClass} onClick={() => { selected ? disselect(tag.id) : select(tag.id) }}>{tag.name} <span className={spanClass} aria-hidden="true"></span></a>
               )
             }
           )}

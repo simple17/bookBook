@@ -89,12 +89,6 @@ var createTag = (bookId, tag) => {
     fetch(`//${Config.api.path}${Config.api.methods.createTag}/${bookId}/tag`,
       {
         method: 'post',
-        // headers: {
-        //   'Accept': '*/*',
-        //   'Content-Type': 'application/jsonp',
-        //   // "Access-Control-Allow-Methods": 'put',
-        //   // 'Access-Control-Allow-Origin': '*'
-        // },
         body: JSON.stringify({
           name: tag
         })
@@ -119,9 +113,41 @@ var createTag = (bookId, tag) => {
   };
 };
 
+var addTagToBook = (bookId, tagId) => {
+  return dispatch => {
+    fetch(`//${Config.api.path}${Config.api.methods.createTag}/${bookId}/tag`,
+      {
+        method: 'post',
+        body: JSON.stringify({
+          id: tagId
+        })
+      }
+    )
+    .then(function(response) {
+      return response.json()
+    }).then(function(data) {
+      var tag = data.data[0][0];
+      console.log(data);
+      dispatch({
+        type: 'ADD_TAG',
+        name: tag.data.name,
+        id: tag.metadata.id
+      });
+      dispatch({
+        type: 'ADD_TAG_TO_CURRENT_BOOK',
+        name: tag.data.name,
+        id: tag.metadata.id
+      });
+    });
+
+
+  };
+};
+
 export default {
   Search: loadBooks,
   GetBook: loadBook,
   GetTagsCloud: loadTagsCloud,
-  CreateTag: createTag
+  CreateTag: createTag,
+  AddTagToBook: addTagToBook
 };
