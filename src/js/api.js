@@ -155,11 +155,32 @@ var removeTagFromBook = (bookId, tagId) => {
   };
 };
 
+var addBook = (title, rating, history) => {
+  return dispatch => {
+    fetch(`//${Config.api.path}/rest/book`,
+      {
+        method: 'post',
+        body: JSON.stringify({
+          title: title,
+          rating: rating ? +rating : 0
+        })
+      }
+    )
+    .then(function(response) {
+      return response.json()
+    }).then(function(data) {
+      console.log(data);
+      history.push(`/book/${data.id}`);
+    });
+  };
+};
+
 export default {
   Search: loadBooks,
   GetBook: loadBook,
   GetTagsCloud: loadTagsCloud,
   CreateTag: createTag,
   AddTagToBook: addTagToBook,
+  AddBook: addBook,
   RemoveTagFromBook: removeTagFromBook
 };

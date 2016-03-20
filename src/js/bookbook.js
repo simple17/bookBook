@@ -16,6 +16,7 @@ import App from './jsx/app.jsx';
 import BooksList from './jsx/booksList.jsx';
 import About from './jsx/about.jsx';
 import Book from './jsx/book.jsx';
+import AddBook from './jsx/addBook.jsx';
 
 const render = () => {
   ReactDOM.render(
@@ -28,7 +29,8 @@ const render = () => {
             <Route path="book" component={Book}>
               <Route path="/book/:bookId" component={Book}/>
             </Route>
-            <Route path="About" component={About}/>
+            <Route path="add" component={AddBook}/>
+            <Route path="about" component={About}/>
           </Route>
         </Router>
       </div>
