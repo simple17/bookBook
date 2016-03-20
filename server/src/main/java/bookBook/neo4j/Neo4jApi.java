@@ -38,6 +38,8 @@ public class Neo4jApi extends AbstractVerticle {
 
         String deleteTag = "START b=NODE({bookId}), t=NODE({tagId}) MATCH b-[line]-t DELETE line";
 
+        String setRating = "START b=NODE({bookId}) SET b.rating = {ratingVal}";
+
 		JsonObject queryTemplate = new JsonObject()
                 .put("params", new JsonObject());
 
@@ -269,9 +271,6 @@ public class Neo4jApi extends AbstractVerticle {
             req.put("query", getAllTags);
 
             System.out.println("neo4j.book.getAllTags: " + req);
-
-
-
             eb.send("neo4j.runCypher", req, cypherResponse -> {
 
                 if (cypherResponse.succeeded()) {
@@ -289,6 +288,35 @@ public class Neo4jApi extends AbstractVerticle {
                     getByIdMessage.fail(0, cypherResponse.cause().getMessage());
                 }
             });
+
+            //getByIdMessage.reply("ok");
+        });
+
+
+        eb.consumer("neo4j.book.setRating", getByIdMessage -> {
+
+            JsonObject data = (JsonObject) getByIdMessage.body();
+            System.out.println("neo4j.book.deleteTag: " + data);
+
+            JsonObject req = new JsonObject(queryTemplate.toString());
+            req.getJsonObject("params").put("bookId", data.getLong("bookId"));
+            req.getJsonObject("params").put("ratingVal", data.getLong("ratingVal"));
+            req.put("query", setRating);
+
+            System.out.println("neo4j.book.setRating: " + req);
+            eb.send("neo4j.runCypher", req, cypherResponse -> {
+
+                if (cypherResponse.succeeded()) {
+                    // удачно сохранили в neo4j, надо достать и отправить id
+                    JsonObject neo4jResponseData = (JsonObject) cypherResponse.result().body();
+                    String resp = neo4jResponseData.toString();
+                    getByIdMessage.reply(resp);
+                } else {
+                    // сохранение с ошибкой, отправлям fail
+                    getByIdMessage.fail(0, cypherResponse.cause().getMessage());
+                }
+            });
+
 
             //getByIdMessage.reply("ok");
         });

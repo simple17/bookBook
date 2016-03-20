@@ -215,6 +215,29 @@ public class BookRouter {
             //rc.response().end("ok");
         });
 
+        router.route()
+                .path("/:bookId/rating/:ratingVal")
+                .method(HttpMethod.POST).handler(rc -> {
+
+
+            JsonObject queryData = new JsonObject();
+            Long bookId = Long.valueOf(rc.request().getParam("bookId"));
+            queryData.put("bookId", bookId);
+            System.out.println("bookId: " + bookId);
+            Long ratingVal = Long.valueOf(rc.request().getParam("ratingVal"));
+            queryData.put("ratingVal", ratingVal);
+            System.out.println("ratingVal: " + ratingVal);
+
+            eb.send("neo4j.book.setRating", queryData, neo4jResponse -> {
+                rc.response().putHeader("Content-type", "application/json; charset=utf-8");
+                rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                rc.response().end(neo4jResponse.result().body().toString());
+            });
+
+            //rc.response().end("ok");
+        });
+
 
         }
     }
