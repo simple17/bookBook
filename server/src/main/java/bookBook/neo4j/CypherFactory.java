@@ -12,6 +12,8 @@ import static org.neo4j.cypherdsl.CypherQuery.node;
 import static org.neo4j.cypherdsl.CypherQuery.nodesById;
 import static org.neo4j.cypherdsl.CypherQuery.start;
 import static org.neo4j.cypherdsl.CypherQuery.*;
+import static org.neo4j.cypherdsl.Order.ASCENDING;
+import static org.neo4j.cypherdsl.Order.DESCENDING;
 
 /**
  * Created by DMitin on 19.03.2016.
@@ -65,7 +67,10 @@ public class CypherFactory {
         if(paths.isEmpty()) {
             startQuery.match(node(bookLetter).label("Book"));
         }
-        startQuery.returns(identifier(bookLetter));
+        //startQuery.orderBy( order( identifier( "event" ).property( "name" ), ASCENDING )
+        startQuery
+                .returns(identifier(bookLetter))
+                .orderBy(order(identifier( "b" ).property( "rating" ), DESCENDING ));
 
         String request = startQuery.toString();
         String returnString = request;

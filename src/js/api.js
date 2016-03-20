@@ -14,8 +14,8 @@ var loadBooks = (params) => {
           books: data.data.map(b => {
             return {
               id: b[0].metadata.id,
-              title: b[0].data.title
-
+              title: b[0].data.title,
+              rating: b[0].data.rating
             };
           })
         });
@@ -41,7 +41,7 @@ var loadBook = (id) => {
           id: data[0][0].metadata.id,
           imageUrl:  '',
           title: data[0][0].data.title,
-          rating: 0,
+          rating: data[0][0].data.rating,
           tags: data[0][2].map(t => {
             return {
               id: t.metadata.id,
@@ -154,7 +154,25 @@ var removeTagFromBook = (bookId, tagId) => {
     });
   };
 };
-
+var addBook = (title, rating, history) => {
+  return dispatch => {
+    fetch(`//${Config.api.path}/rest/book`,
+      {
+        method: 'post',
+        body: JSON.stringify({
+          title: title,
+          rating: rating ? +rating : 0
+        })
+      }
+    )
+    .then(function(response) {
+      return response.json()
+    }).then(function(data) {
+      console.log(data);
+      history.push(`/book/${data.id}`);
+    });
+  };
+};
 var updateRatingForBook = (bookId, rating) => {
   return dispatch => {
     fetch(`//${Config.api.path}/rest/book/${bookId}/rating/${rating}`,
@@ -167,12 +185,19 @@ var updateRatingForBook = (bookId, rating) => {
     }).then(function(data) {
       // var tag = data.data[0][0];
       dispatch({
-        type: 'REMOVE_TAG_FROM_CURRENT_BOOK',
-        id: tagId
+        type: 'UPDATE_RATING_FOR_CURRENT_BOOK',
+        rating: rating
+      });
+
+      dispatch({
+        type: 'UPDATE_BOOK_RATING',
+        id: bookId,
+        rating: rating
       });
     });
   };
 };
+
 
 export default {
   Search: loadBooks,
@@ -181,5 +206,6 @@ export default {
   CreateTag: createTag,
   AddTagToBook: addTagToBook,
   RemoveTagFromBook: removeTagFromBook,
+  AddBook: addBook,
   UpdateRatingForBook: updateRatingForBook
 };

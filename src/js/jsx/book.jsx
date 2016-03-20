@@ -16,8 +16,11 @@ class Book extends React.Component {
         <article className='row'>
           <div className="col-xs-3">
             <img className="img-responsive" src={`//${Config.api.path}${book.imageUrl}`}/>
-            <Rating rating={book.rating}/>
-            <button className="btn btn-default customButton">Редактировать</button>
+            <Rating
+              rating={book.rating}
+              setRating={(rating)=>{store.dispatch(api.UpdateRatingForBook(book.id, rating));}}
+              />
+            <button>Редактировать</button>
           </div>
           <div className="col-xs-6">
             <h2>{book.title}</h2>
@@ -38,7 +41,7 @@ class Book extends React.Component {
                 store.dispatch(api.AddTagToBook(book.id, tagId));
               }}
               disselect={(tagId) => {
-                store.dispatch(api.RemoveTagFromBook(book.id, tagId)); 
+                store.dispatch(api.RemoveTagFromBook(book.id, tagId));
               }}
               addTag={(value) => {
                 console.log(value + "  " + book.id);
