@@ -19,7 +19,8 @@ export default (state = Object.assign({}, defaultState), action) => {
       	"rating": action.rating,
       	"tags": action.tags,
       	"author": action.author,
-      	"comments": action.comments
+      	"comments": action.comments,
+        description: action.description
       };
       break;
     case 'CLEAR_CURRENT_BOOK':

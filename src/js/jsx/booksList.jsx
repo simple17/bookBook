@@ -21,7 +21,7 @@ const List = ({
               key={book.id}
               id={book.id}
               title={book.title}
-              authors={book.authors}
+              author={book.author}
               rating={book.rating}
               picture={book.imageUrl}
               readMore={(e)=>{

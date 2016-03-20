@@ -34,13 +34,15 @@ class Book extends React.Component {
             </div>
             <div className="col-xs-6">
               <h2>{book.title}</h2>
-              <p>Автор: {book.author}</p>
+              {book.author ? (<p>Автор: {book.author}</p>) : ''}
+
               {book.comments.length ? (<h3>Комментарий: </h3>) : ''}
               {
                 book.comments.map(c => (
                   <p key={c.id}>"{c.text}"</p>
                 ))
               }
+              {book.description ? (<p>{book.description}</p>) : ''}
             </div>
             <div className="col-xs-3">
               <h4>Добавить тэги:</h4>

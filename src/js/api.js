@@ -16,7 +16,8 @@ var loadBooks = (params) => {
               id: b[0].metadata.id,
               title: b[0].data.title,
               rating: b[0].data.rating,
-              imageUrl: b[0].data.imageUrl ? b[0].data.imageUrl : ''
+              imageUrl: b[0].data.imageUrl ? b[0].data.imageUrl : '',
+              author: b[0].data.author
             };
           })
         });
@@ -36,7 +37,7 @@ var loadBook = (id) => {
     .then(function(response) {
       return response.json()
     }).then(function(data) {
-      if(!Object.is(data, {})){
+
         dispatch({
           type: 'SET_CURRENT_BOOK',
           id: data[0][0].metadata.id,
@@ -50,10 +51,10 @@ var loadBook = (id) => {
               name: t.data.name
             };
           }),
-          authors: [],
-          comments: []
+          comments: [],
+          description: data[0][0].data.description
         });
-      }
+
     });
   };
 };
@@ -156,7 +157,7 @@ var removeTagFromBook = (bookId, tagId) => {
     });
   };
 };
-var addBook = (title, rating, author, history, store) => {
+var addBook = (title, rating, author, description, history, store) => {
   return dispatch => {
     fetch(`//${Config.api.path}/rest/book`,
       {
@@ -164,7 +165,8 @@ var addBook = (title, rating, author, history, store) => {
         body: JSON.stringify({
           title: title,
           rating: rating ? +rating : 0,
-          author: author
+          author: author,
+          description: description
         })
       }
     )
