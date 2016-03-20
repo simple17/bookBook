@@ -40,4 +40,6 @@ const render = () => {
   );
 };
 bookBookStore.dispatch(api.GetTagsCloud());
+bookBookStore.dispatch(api.Search({name: "", tags: []}));
+
 render();

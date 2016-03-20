@@ -63,17 +63,33 @@ class Filter extends React.Component {
          <FilterByTags
            tags={tags}
            select={(id, name)=>{
+             let text = this.input.value;
              store.dispatch({
                type: 'SELECT_SEARCH_TAG',
                id: id,
                name: name
              });
+            //  store.dispatch(api.Search({
+             //
+            //    name: text,
+            //    tags: state.getState().search.selectedTags.map(t => {
+            //      return {id: t.id};
+            //    })
+            //    }));
            }}
            disselect={(id)=>{
+             let text = this.input.value;
              store.dispatch({
                type: 'DISSELECT_SEARCH_TAG',
-               id: id
+               id: id,
+
              });
+            //  store.dispatch(api.Search({
+            //    name: text,
+            //    tags: state.getState().search.selectedTags.map(t => {
+            //      return {id: t.id};
+            //    })
+            //    }));
            }}
            formTags={searchState.selectedTags}
            />
