@@ -35,8 +35,12 @@ public class Neo4jApi extends AbstractVerticle {
         String addNewAuthor = "START b=NODE({bookId}) CREATE (b)<-[:WROTE]-(a:Author {fio: {fio}}) return a";
         String addNewTag = "START b=NODE({bookId}) CREATE (b)-[:HAS_TAG]->(t:Tag {name: {name}}) return t";
         String addExistingTag = "START b=NODE({bookId}), t=NODE({tagId}) CREATE (b)-[:HAS_TAG]->(t) return t";
+
+        String deleteTag = "START b=NODE({bookId}), t=NODE({tagId}) MATCH b-[line]-t DELETE line";
+
 		JsonObject queryTemplate = new JsonObject()
                 .put("params", new JsonObject());
+
 
 
         String getAllTags = "MATCH (n:Tag) RETURN n";
@@ -205,14 +209,38 @@ public class Neo4jApi extends AbstractVerticle {
             System.out.println("neo4j.book.addExistingTag: " + data);
 
             JsonObject req = new JsonObject(queryTemplate.toString());
-
-
             req.getJsonObject("params").put("bookId", data.getLong("bookId"));
             req.getJsonObject("params").put("tagId", data.getLong("tagId"));
             req.put("query", addExistingTag);
 
             System.out.println("neo4j.book.addExistingTag: " + req);
+            eb.send("neo4j.runCypher", req, cypherResponse -> {
 
+                if (cypherResponse.succeeded()) {
+                    // удачно сохранили в neo4j, надо достать и отправить id
+                    JsonObject neo4jResponseData = (JsonObject) cypherResponse.result().body();
+                    String resp = neo4jResponseData.toString();
+                    getByIdMessage.reply(resp);
+                } else {
+                    // сохранение с ошибкой, отправлям fail
+                    getByIdMessage.fail(0, cypherResponse.cause().getMessage());
+                }
+            });
+
+            //getByIdMessage.reply("ok");
+        });
+
+
+        eb.consumer("neo4j.book.deleteTag", getByIdMessage -> {
+            JsonObject data = (JsonObject) getByIdMessage.body();
+            System.out.println("neo4j.book.deleteTag: " + data);
+
+            JsonObject req = new JsonObject(queryTemplate.toString());
+            req.getJsonObject("params").put("bookId", data.getLong("bookId"));
+            req.getJsonObject("params").put("tagId", data.getLong("tagId"));
+            req.put("query", deleteTag);
+
+            System.out.println("neo4j.book.deleteTag: " + req);
 
             eb.send("neo4j.runCypher", req, cypherResponse -> {
 
@@ -228,6 +256,7 @@ public class Neo4jApi extends AbstractVerticle {
             });
 
             //getByIdMessage.reply("ok");
+
         });
 
 
