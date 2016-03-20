@@ -35,15 +35,17 @@ class Filter extends React.Component {
             />
         </form>
         </div>
-        <span onClick={() => {
-            let text = this.input.value;
-          store.dispatch(api.Search({
-            name: text,
-            tags: searchState.selectedTags.map(t => {
-              return {id: t.id};
-            })
-          }));
-        }} className="col-md-1 glyphicon glyphicon-search"></span>
+        <span
+            onClick={() => {
+              let text = this.input.value;
+              store.dispatch(api.Search({
+                name: text,
+                tags: searchState.selectedTags.map(t => {
+                  return {id: t.id};
+                })
+              }));
+            }}
+            className="col-md-1 glyphicon glyphicon-search"></span>
       </div>
       <div className="row">
         <p

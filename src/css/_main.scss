@@ -133,6 +133,13 @@
     /*border-bottom: 5px solid #201600;*/
     /*border-right: 5px solid #201600;*/
 }
+
+.customButton_tag-cloud{
+  span{
+    font-size:14px;
+  }
+}
+
 .customLabel {
     color: #201600;
     font-size: 18pt;
@@ -141,12 +148,17 @@
 }
 .tagButton {
     border-radius: 0;
+    font-size: 10pt !important;
     border: 2px solid #201600;
     color: #201600;
     font-size: 14pt;
     background-color: white;
     background: white;
     margin: 2px;
+}
+
+.tag-cloud-list{
+  margin: 15px 0;
 }
 
 .tagButton:hover {
@@ -283,4 +295,7 @@
 }
 #reviewStars-input #star-5 {
     left: 265px;
+}
+.customPlus {
+    font-size: inherit;
 }

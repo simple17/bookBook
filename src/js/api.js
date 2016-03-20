@@ -43,7 +43,14 @@ var loadBook = (id) => {
           imageUrl:  data[0][0].data.imageUrl ? data[0][0].data.imageUrl : '',
           title: data[0][0].data.title,
           rating: data[0][0].data.rating,
-          tags: data[0][0].author,
+          author: data[0][0].data.author,
+          tags: data[0][2].map(t => {
+            return {
+              id: t.metadata.id,
+              name: t.data.name
+            };
+          }),
+          authors: [],
           comments: []
         });
       }
@@ -149,14 +156,15 @@ var removeTagFromBook = (bookId, tagId) => {
     });
   };
 };
-var addBook = (title, rating, history, store) => {
+var addBook = (title, rating, author, history, store) => {
   return dispatch => {
     fetch(`//${Config.api.path}/rest/book`,
       {
         method: 'post',
         body: JSON.stringify({
           title: title,
-          rating: rating ? +rating : 0
+          rating: rating ? +rating : 0,
+          author: author
         })
       }
     )

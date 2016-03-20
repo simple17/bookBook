@@ -15,7 +15,7 @@ class AddBook extends React.Component {
 
   render(){
     const {store} = this.context;
-    var title = '', rating = 0;
+    var title = '', rating = 0, author = '';
     return (
       <div>
         <div className="container-fluid">
@@ -58,6 +58,21 @@ class AddBook extends React.Component {
               </div>
             </div>
 
+            <div className="form-group">
+              <label htmlFor="addBookAuthor" className="col-sm-2 control-label">Автор</label>
+              <div className="col-sm-10">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="addBookAuthor"
+                  placeholder="Введите имя автора"
+                  ref={(input) => {
+                    author = input;
+                  }}
+                />
+              </div>
+            </div>
+
 
             <div className="form-group">
               <div className="col-sm-offset-2 col-sm-10">
@@ -66,7 +81,7 @@ class AddBook extends React.Component {
                   class="btn btn-default"
                   onClick={(e)=>{
                     e.preventDefault();
-                    store.dispatch(api.AddBook(title.value, rating.value, browserHistory, store));
+                    store.dispatch(api.AddBook(title.value, rating.value, author.value, browserHistory, store));
                   }}
                   >Сохранить</button>
               </div>
