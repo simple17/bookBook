@@ -155,11 +155,31 @@ var removeTagFromBook = (bookId, tagId) => {
   };
 };
 
+var updateRatingForBook = (bookId, rating) => {
+  return dispatch => {
+    fetch(`//${Config.api.path}/rest/book/${bookId}/rating/${rating}`,
+      {
+        method: 'post'
+      }
+    )
+    .then(function(response) {
+      return response.json()
+    }).then(function(data) {
+      // var tag = data.data[0][0];
+      dispatch({
+        type: 'REMOVE_TAG_FROM_CURRENT_BOOK',
+        id: tagId
+      });
+    });
+  };
+};
+
 export default {
   Search: loadBooks,
   GetBook: loadBook,
   GetTagsCloud: loadTagsCloud,
   CreateTag: createTag,
   AddTagToBook: addTagToBook,
-  RemoveTagFromBook: removeTagFromBook
+  RemoveTagFromBook: removeTagFromBook,
+  UpdateRatingForBook: updateRatingForBook
 };
