@@ -78,10 +78,14 @@ public class Neo4jApi extends AbstractVerticle {
 
         eb.consumer("neo4j.book.searchBook", searchBookMessage -> {
 
-            JsonObject bookData = (JsonObject) searchBookMessage.body();
+            JsonObject searchData = (JsonObject) searchBookMessage.body();
             JsonObject req = new JsonObject(queryTemplate.toString());
             //req.getJsonObject("params").put("props", bookData);
-            req.put("query", searchBookQuery);
+            JsonArray tags = searchData.getJsonArray("tags");
+            String query = CypherFactory.createQuery("", tags);
+            req.put("query", query);
+
+            System.out.println("neo4j.book.searchBook: " + req);
 
             eb.send("neo4j.runCypher", req, cypherResponse -> {
 
@@ -95,6 +99,8 @@ public class Neo4jApi extends AbstractVerticle {
                     searchBookMessage.fail(0, cypherResponse.cause().getMessage());
                 }
             });
+
+            //searchBookMessage.reply("ok");
         });
 
 

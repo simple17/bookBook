@@ -1,11 +1,14 @@
 package bookBook.router.book;
 
+import bookBook.neo4j.CypherFactory;
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.file.FileSystem;
 import io.vertx.core.http.HttpMethod;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
+import org.neo4j.cypherdsl.CypherQuery;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,18 +55,23 @@ public class BookRouter {
 
             System.out.println("/search");
 
-            /*
-            eb.send("neo4j.book.searchBook", new JsonObject(), neo4jResponse -> {
+            JsonObject json = rc.getBodyAsJson();
+            //CypherFactory.createQuery("", tags);
+
+
+
+            eb.send("neo4j.book.searchBook", json, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
-            */
 
 
+/*
             rc.response().putHeader("Access-Control-Allow-Origin", "*");
             rc.response().end(responses.get(searchResponse));
-
+*/
         });
 
         /*
@@ -79,6 +87,7 @@ public class BookRouter {
             eb.send("neo4j.book.getById", id, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
             /*
@@ -98,9 +107,16 @@ public class BookRouter {
                 .method(HttpMethod.POST).handler(rc -> {
 
             JsonObject json = rc.getBodyAsJson();
+            if (json.getLong("rating") == null) {
+                json.put("rating", 0);
+            }
+
+            json.put("imageUrl", "/images/default.png");
+
             eb.send("neo4j.book.addBook", json, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                 rc.response().end(neo4jResponse.result().body().toString());
             });
 
@@ -128,6 +144,7 @@ public class BookRouter {
                 eb.send("neo4j.book.addNewAuthor", data, neo4jResponse -> {
                     rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                     rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                    rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                     rc.response().end(neo4jResponse.result().body().toString());
                 });
             } else {
@@ -141,7 +158,7 @@ public class BookRouter {
          */
         router.route()
                 .path("/:id/tag")
-                .method(HttpMethod.PUT).handler(rc -> {
+                .method(HttpMethod.POST).handler(rc -> {
 
 
             Long id = Long.valueOf(rc.request().getParam("id"));
@@ -158,6 +175,7 @@ public class BookRouter {
                 eb.send("neo4j.book.addNewTag", data, neo4jResponse -> {
                     rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                     rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                    rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                     rc.response().end(neo4jResponse.result().body().toString());
                 });
 
@@ -169,6 +187,7 @@ public class BookRouter {
                 eb.send("neo4j.book.addExistingTag", data, neo4jResponse -> {
                     rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                     rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                    rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                     rc.response().end(neo4jResponse.result().body().toString());
                 });
             }
