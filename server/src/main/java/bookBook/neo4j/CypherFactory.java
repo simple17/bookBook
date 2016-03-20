@@ -67,7 +67,17 @@ public class CypherFactory {
         }
         startQuery.returns(identifier(bookLetter));
 
-        System.out.println(startQuery);
-        return startQuery.toString();
+        String request = startQuery.toString();
+        String returnString = request;
+        if (name != null && !name.isEmpty()){
+            String whereClause = "WHERE b.title CONTAINS \'" + name + "\' ";
+            int position = request.indexOf("RETURN");
+            String queryWhere = new StringBuffer(request).insert(position, whereClause).toString();
+            returnString = queryWhere;
+
+        }
+        System.out.println(returnString);
+
+        return returnString;
     }
 }
