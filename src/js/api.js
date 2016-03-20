@@ -154,7 +154,6 @@ var removeTagFromBook = (bookId, tagId) => {
     });
   };
 };
-
 var addBook = (title, rating, history) => {
   return dispatch => {
     fetch(`//${Config.api.path}/rest/book`,
@@ -174,6 +173,25 @@ var addBook = (title, rating, history) => {
     });
   };
 };
+var updateRatingForBook = (bookId, rating) => {
+  return dispatch => {
+    fetch(`//${Config.api.path}/rest/book/${bookId}/rating/${rating}`,
+      {
+        method: 'post'
+      }
+    )
+    .then(function(response) {
+      return response.json()
+    }).then(function(data) {
+      // var tag = data.data[0][0];
+      dispatch({
+        type: 'REMOVE_TAG_FROM_CURRENT_BOOK',
+        id: tagId
+      });
+    });
+  };
+};
+
 
 export default {
   Search: loadBooks,
@@ -181,6 +199,7 @@ export default {
   GetTagsCloud: loadTagsCloud,
   CreateTag: createTag,
   AddTagToBook: addTagToBook,
+  RemoveTagFromBook: removeTagFromBook,
   AddBook: addBook,
-  RemoveTagFromBook: removeTagFromBook
+  UpdateRatingForBook: updateRatingForBook
 };

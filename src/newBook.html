@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookBook</title>
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="../css/styleExetendedSearch.css" />
+
+    <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="css/main.css" media="screen">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal">
+                <fieldset>
+                    <div class="form-group">
+                        <lable class="col-md-2 control-label customLabelAdd" for="inputTitle">Название:</lable>
+                        <div class="col-md-10 ">
+                            <input type="text" class="customInput form-control" id="inputTitle" placeholder="Введиете название книги">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <lable class="col-md-2 control-label customLabelAdd" for="inputauthor">Автор:</lable>
+                        <div class="col-md-10 ">
+                            <input type="text" class="customInput form-control" id="inputAuthor" placeholder="Введите фамилию автора">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <p class="customLabelAdd" style="float: right;">Рейтинг:</p>
+                            </div><div class="col-md-10">
+                            <div id="reviewStars-input">
+                                <input id="star-4" type="radio" name="reviewStars"/>
+                                <label title="gorgeous" for="star-4"></label>
+
+                                <input id="star-3" type="radio" name="reviewStars"/>
+                                <label title="good" for="star-3"></label>
+
+                                <input id="star-2" type="radio" name="reviewStars"/>
+                                <label title="regular" for="star-2"></label>
+
+                                <input id="star-1" type="radio" name="reviewStars"/>
+                                <label title="poor" for="star-1"></label>
+
+                                <input id="star-0" type="radio" name="reviewStars"/>
+                                <label title="bad" for="star-0"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <br>
+                            <button type="submit" class="customButton btn btn-block btn-primary">ДОБАВИТЬ НОВУЮ КНИГУ В БИБЛИОТЕКУ</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

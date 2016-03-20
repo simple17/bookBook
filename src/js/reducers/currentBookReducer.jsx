@@ -32,6 +32,10 @@ export default (state = Object.assign({}, defaultState), action) => {
       return Object.assign({}, state, {
         tags: state.tags.filter(t => t.id !== action.id)
       });
+    case 'UPDATE_RATING_FOR_CURRENT_BOOK':
+      return Object.assign({}, state, {
+       rating: action.rating
+      });
     default:
       return state;
   }
