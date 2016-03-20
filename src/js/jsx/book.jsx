@@ -17,7 +17,7 @@ class Book extends React.Component {
           <div className="col-xs-3">
             <img className="img-responsive" src={`//${Config.api.path}${book.imageUrl}`}/>
             <Rating rating={book.rating}/>
-            <button>Редактировать</button>
+            <button className="btn btn-default customButton">Редактировать</button>
           </div>
           <div className="col-xs-6">
             <h2>{book.title}</h2>
