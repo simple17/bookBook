@@ -107,6 +107,10 @@ public class BookRouter {
                 .method(HttpMethod.POST).handler(rc -> {
 
             JsonObject json = rc.getBodyAsJson();
+            if (json.getLong("rating") == null) {
+                json.put("rating", 0);
+            }
+
             eb.send("neo4j.book.addBook", json, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
