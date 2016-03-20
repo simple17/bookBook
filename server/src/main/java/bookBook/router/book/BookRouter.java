@@ -264,7 +264,7 @@ public class BookRouter {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
                 rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-                rc.response().end(neo4jResponse.result().body().toString());
+                rc.response().end(realUrl);
             });
 
             //rc.response().end("file upload");
