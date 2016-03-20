@@ -111,6 +111,8 @@ public class BookRouter {
                 json.put("rating", 0);
             }
 
+            json.put("imageUrl", "/images/default.png");
+
             eb.send("neo4j.book.addBook", json, neo4jResponse -> {
                 rc.response().putHeader("Content-type", "application/json; charset=utf-8");
                 rc.response().putHeader("Access-Control-Allow-Origin", "*");
