@@ -14,6 +14,16 @@ class Filter extends React.Component {
     <div className="">
       <div className="row">
         <div className="col-md-11">
+        <form onSubmit={(e) => {
+            e.preventDefault();
+             let text = this.input.value;
+             store.dispatch(api.Search({
+               name: text,
+               tags: searchState.selectedTags.map(t => {
+                 return {id: t.id};
+               })
+             }));
+            }}>
           <input
             type="text"
             className="customInput form-control"
@@ -23,6 +33,7 @@ class Filter extends React.Component {
               this.input = input;
             }}
             />
+        </form>
         </div>
         <span onClick={() => {
             let text = this.input.value;
