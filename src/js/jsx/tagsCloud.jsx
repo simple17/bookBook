@@ -8,11 +8,14 @@ export default ({tags, bookTags, select, disselect, addTag}) => {
         <input className="customInput" ref={input => {
             inputRef = input;
           }}/>
-        <button className="customButton" onClick={() => {
+        <button class="customButton" onClick={() => {
+            if(!inputRef.value)
+            {
+              return;
+            }
             addTag(inputRef.value);
             inputRef.value = '';
-          }}><span className="customPlus glyphicon glyphicon-plus"></span></button>
-
+          }}><span className="glyphicon glyphicon-plus"></span></button>
         <div>
           {tags.map(tag => {
             let selected = bookTags.filter(t => tag.id === t.id).length ? true : false;

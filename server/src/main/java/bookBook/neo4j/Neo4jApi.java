@@ -38,6 +38,7 @@ public class Neo4jApi extends AbstractVerticle {
 
         String deleteTag = "START b=NODE({bookId}), t=NODE({tagId}) MATCH b-[line]-t DELETE line";
         String setRating = "START b=NODE({bookId}) SET b.rating = {ratingVal}";
+        String setImageUrl = "START b=NODE({bookId}) SET b.imageUrl = {imageUrl}";
         String getRecomendation = "START b1 = NODE({bookId}) MATCH (b1)-[:HAS_TAG]-(tags)-[:HAS_TAG]-(b2) WHERE NOT b1 = b2 return b2, count(distinct tags) as tagNumber ORDER BY tagNumber DESC LIMIT 5";
 
 		JsonObject queryTemplate = new JsonObject()
@@ -347,6 +348,34 @@ public class Neo4jApi extends AbstractVerticle {
 
             //getByIdMessage.reply("ok");
         });
+
+
+        eb.consumer("neo4j.book.changeImage", getByIdMessage -> {
+            JsonObject data = (JsonObject) getByIdMessage.body();
+            System.out.println("neo4j.book.changeImage: " + data);
+
+            JsonObject req = new JsonObject(queryTemplate.toString());
+            req.getJsonObject("params").put("bookId", data.getLong("bookId"));
+            req.getJsonObject("params").put("imageUrl", data.getString("imageUrl"));
+            req.put("query", setImageUrl);
+
+            System.out.println("neo4j.recomendation.get: " + req);
+
+            eb.send("neo4j.runCypher", req, cypherResponse -> {
+
+                if (cypherResponse.succeeded()) {
+                    // удачно сохранили в neo4j, надо достать и отправить id
+                    JsonObject neo4jResponseData = (JsonObject) cypherResponse.result().body();
+                    String resp = neo4jResponseData.toString();
+                    getByIdMessage.reply(resp);
+                } else {
+                    // сохранение с ошибкой, отправлям fail
+                    getByIdMessage.fail(0, cypherResponse.cause().getMessage());
+                }
+            });
+
+        });
+
 	}
 
 }

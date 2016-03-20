@@ -36,6 +36,10 @@ export default (state = Object.assign({}, defaultState), action) => {
       return Object.assign({}, state, {
        rating: action.rating
       });
+    case 'UPDATE_PICTURE_FOR_BOOK':
+      return Object.assign({}, state, {
+       imageUrl: action.imageUrl
+      });
     default:
       return state;
   }

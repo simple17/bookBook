@@ -15,7 +15,8 @@ var loadBooks = (params) => {
             return {
               id: b[0].metadata.id,
               title: b[0].data.title,
-              rating: b[0].data.rating
+              rating: b[0].data.rating,
+              imageUrl: b[0].data.imageUrl ? b[0].data.imageUrl : ''
             };
           })
         });
@@ -39,7 +40,7 @@ var loadBook = (id) => {
         dispatch({
           type: 'SET_CURRENT_BOOK',
           id: data[0][0].metadata.id,
-          imageUrl:  '',
+          imageUrl:  data[0][0].data.imageUrl ? data[0][0].data.imageUrl : '',
           title: data[0][0].data.title,
           rating: data[0][0].data.rating,
           tags: data[0][2].map(t => {
@@ -154,7 +155,7 @@ var removeTagFromBook = (bookId, tagId) => {
     });
   };
 };
-var addBook = (title, rating, history) => {
+var addBook = (title, rating, history, store) => {
   return dispatch => {
     fetch(`//${Config.api.path}/rest/book`,
       {
@@ -169,6 +170,8 @@ var addBook = (title, rating, history) => {
       return response.json()
     }).then(function(data) {
       console.log(data);
+      store.dispatch(loadBook(data.id));
+      store.dispatch(loadTagsCloud());
       history.push(`/book/${data.id}`);
     });
   };
@@ -198,6 +201,24 @@ var updateRatingForBook = (bookId, rating) => {
   };
 };
 
+var updatePhoto = (body, bookId) => {
+  return dispatch => {
+    fetch(`//${Config.api.path}/rest/book/${bookId}/upload`,
+      {
+        method: 'post',
+        body: body
+      }
+    )
+    .then(function(response) {
+      return response.json()
+    }).then(function(data) {
+      dispatch({
+        type: 'UPDATE_PICTURE_FOR_BOOK',
+        imageUrl: "/images/9048a533-6087-4678-b737-eed4e2ef7ac0"
+      });
+    });
+  };
+};
 
 export default {
   Search: loadBooks,
@@ -207,5 +228,6 @@ export default {
   AddTagToBook: addTagToBook,
   RemoveTagFromBook: removeTagFromBook,
   AddBook: addBook,
-  UpdateRatingForBook: updateRatingForBook
+  UpdateRatingForBook: updateRatingForBook,
+  UpdatePhoto: updatePhoto
 };

@@ -10,7 +10,7 @@ export default ({
   return (
       <div className="row">
         <div className="col-md-12">
-          <p className="customLabel">Выбирите тэги:</p>
+          <p className="customLabel">Выберите тэги:</p>
           {
             tags.map(tag => {
               let selected = formTags.filter(t => tag.id === t.id).length ? true : false;

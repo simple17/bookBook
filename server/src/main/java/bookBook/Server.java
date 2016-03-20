@@ -22,7 +22,7 @@ public class Server extends AbstractVerticle {
         Router restAPI = Router.router(vertx);
         RestApiRouter.initRestRouter(restAPI, vertx);
         router.mountSubRouter("/rest", restAPI);
-        router.route("/images/*").handler(StaticHandler.create());
+        router.route("/images/*").handler(StaticHandler.create("file-uploads"));
 
         vertx
             .createHttpServer()
