@@ -15,7 +15,7 @@ export default ({tags, bookTags, select, disselect, addTag}) => {
             }
             addTag(inputRef.value);
             inputRef.value = '';
-          }}><span className="glyphicon glyphicon-plus"></span></button>
+          }}><span className="customPlus glyphicon glyphicon-plus"></span></button>
         <div className="tag-cloud-list">
           {tags.map(tag => {
             let selected = bookTags.filter(t => tag.id === t.id).length ? true : false;
