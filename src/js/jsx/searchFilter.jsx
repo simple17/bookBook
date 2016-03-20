@@ -1,9 +1,12 @@
 import React from 'react';
 import api from '../api.js';
+import classNames from 'classnames';
+import { connect } from 'react-redux';
 
 class Filter extends React.Component {
   render(){
     const {store} = this.context;
+    const searchState = store.getState().search;
     return (
     <div className="">
       <div className="row">
@@ -15,16 +18,18 @@ class Filter extends React.Component {
         }} className="col-md-1 glyphicon glyphicon-search"></span>
       </div>
       <div className="row">
-        <p className="search-filter_extended col-md-2 col-md-offset-9">Расширенный поиск&nbsp;
-          <span className="glyphicon glyphicon-triangle-right"/>
+        <p
+          className="search-filter_extended col-md-2 col-md-offset-9"
+          onClick={()=>{
+            store.dispatch({
+              type: 'TOGGLE_SHOW_PARAMETERS'
+            });
+          }}
+          >Расширенный поиск&nbsp;
+          <span className={classNames('glyphicon', searchState.showParameters ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-right')}/>
         </p>
       </div>
-      <div className="row">
-        <p className="search-filter_extended col-md-2 col-md-offset-9">Расширенный поиск&nbsp;
-          <span className="glyphicon glyphicon-triangle-bottom"/>
-        </p>
-      </div>
-      <div className="row">
+      <div className="row" style={{display: searchState.showParameters ? 'block' : 'none'}}>
         <div className="col-md-12">
           <p className="customLabel">Выбирите тэги:</p>
           <a className="tagButton tagButtonAdd btn btn-default">taaaaaaaaaag
@@ -45,5 +50,6 @@ class Filter extends React.Component {
 Filter.contextTypes = {
   store: React.PropTypes.object
 };
-
-export default Filter;
+export default connect(
+  state => ({ search: state.search })
+)(Filter);
