@@ -20,7 +20,7 @@ class Book extends React.Component {
               rating={book.rating}
               setRating={(rating)=>{store.dispatch(api.UpdateRatingForBook(book.id, rating));}}
               />
-            <button>Редактировать</button>
+            <button className="btn btn-default customButton">Редактировать</button>
           </div>
           <div className="col-xs-6">
             <h2>{book.title}</h2>
