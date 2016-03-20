@@ -43,13 +43,7 @@ var loadBook = (id) => {
           imageUrl:  data[0][0].data.imageUrl ? data[0][0].data.imageUrl : '',
           title: data[0][0].data.title,
           rating: data[0][0].data.rating,
-          tags: data[0][2].map(t => {
-            return {
-              id: t.metadata.id,
-              name: t.data.name
-            };
-          }),
-          authors: [],
+          tags: data[0][0].author,
           comments: []
         });
       }

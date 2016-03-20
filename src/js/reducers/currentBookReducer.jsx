@@ -5,7 +5,7 @@ const defaultState = {
   "title": "",
   "rating": 0,
   "tags": [],
-  "authors": [],
+  "author": "",
   "comments": []
 };
 export default (state = Object.assign({}, defaultState), action) => {
@@ -18,7 +18,7 @@ export default (state = Object.assign({}, defaultState), action) => {
       	"title": action.title,
       	"rating": action.rating,
       	"tags": action.tags,
-      	"authors": action.authors,
+      	"author": action.author,
       	"comments": action.comments
       };
       break;

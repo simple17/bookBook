@@ -13,7 +13,7 @@ class Preview extends React.Component {
         <div className="customBorderForPreview thumbnail">
           <img src={`//${Config.api.path}${this.props.picture}`} className="img-responsive" alt="book image"/>
           <h4 className="book-preview_title">{this.props.title}</h4>
-          <p>{/*this.props.authors.map(a => a.fio).join(', ')*/}</p>
+          <p>{this.props.author}</p>
           <Rating
             rating={this.props.rating}
             setRating={(rating)=>{store.dispatch(api.UpdateRatingForBook(this.props.id, rating));}} />
