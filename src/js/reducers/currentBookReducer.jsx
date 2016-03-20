@@ -28,6 +28,10 @@ export default (state = Object.assign({}, defaultState), action) => {
       return Object.assign({}, state, {
         tags: [...state.tags, {id: action.id, name: action.name}]
       });
+    case 'REMOVE_TAG_FROM_CURRENT_BOOK':
+      return Object.assign({}, state, {
+        tags: state.tags.filter(t => t.id !== action.id)
+      });
     default:
       return state;
   }

@@ -11,7 +11,7 @@ import mainReducer from './reducers/mainReducer.js';
 const bookBookStore = createStore(mainReducer, applyMiddleware(thunk));
 const history = syncHistoryWithStore(browserHistory, bookBookStore)
 
-
+import api from './api.js';
 import App from './jsx/app.jsx';
 import BooksList from './jsx/booksList.jsx';
 import About from './jsx/about.jsx';
@@ -36,5 +36,5 @@ const render = () => {
     document.getElementById('container')
   );
 };
-
+bookBookStore.dispatch(api.GetTagsCloud());
 render();
