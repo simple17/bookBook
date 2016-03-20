@@ -9,6 +9,10 @@ export default ({tags, bookTags, select, disselect, addTag}) => {
             inputRef = input;
           }}/>
         <button class="customButton" onClick={() => {
+            if(!inputRef.value)
+            {
+              return;
+            }
             addTag(inputRef.value);
             inputRef.value = '';
           }}><span className="glyphicon glyphicon-plus"></span></button>

@@ -7,8 +7,8 @@ export default ({}) => {
     <div className="col-xs-12">
       <nav className="customNavBar navbar navbar-default">
         <div className="navbar-header">
-          <Link to="/">
-            {<img src="img/logo.png" alt="Logo" id="topLogo"/>}
+          <Link to="/list">
+            {<img src="/img/logo.png" alt="Logo" id="topLogo"/>}
           </Link>
         </div>
         <ul className="nav navbar-nav navbar-right">
@@ -18,7 +18,7 @@ export default ({}) => {
             </Link>
           </li>
           <li id="liMyLibrary">
-            <Link to="/">
+            <Link to="/list">
                МОЯ БИБЛИОТЕКА
             </Link>
           </li>
