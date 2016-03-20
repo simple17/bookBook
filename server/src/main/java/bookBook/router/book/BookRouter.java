@@ -7,11 +7,14 @@ import io.vertx.core.file.FileSystem;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.FileUpload;
+import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 import org.neo4j.cypherdsl.CypherQuery;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by DMitin on 19.03.2016.
@@ -236,6 +239,35 @@ public class BookRouter {
             });
 
             //rc.response().end("ok");
+        });
+
+
+        Route uploadEmployeeAvatar = router.route().path("/:bookId/upload");
+        uploadEmployeeAvatar.method(HttpMethod.POST);
+        uploadEmployeeAvatar.handler(rc -> {
+            Set<FileUpload> uploads = rc.fileUploads();
+            FileUpload[] uploadsArray = uploads.toArray(new FileUpload[uploads.size()]);
+            System.out.print(uploadsArray[0].uploadedFileName());
+
+            String imageUrl = uploadsArray[0].uploadedFileName();
+            String realUrl =  imageUrl.replaceAll("file-uploads\\\\", "/images/");
+            System.out.println("real url:  " + realUrl);
+
+            Long bookId = Long.valueOf(rc.request().getParam("bookId"));
+            JsonObject queryData = new JsonObject();
+            queryData.put("bookId", bookId);
+            queryData.put("imageUrl", realUrl);
+
+            System.out.println(queryData);
+
+            eb.send("neo4j.book.changeImage", queryData, neo4jResponse -> {
+                rc.response().putHeader("Content-type", "application/json; charset=utf-8");
+                rc.response().putHeader("Access-Control-Allow-Origin", "*");
+                rc.response().putHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                rc.response().end(neo4jResponse.result().body().toString());
+            });
+
+            //rc.response().end("file upload");
         });
 
 
