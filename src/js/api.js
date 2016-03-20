@@ -14,8 +14,8 @@ var loadBooks = (params) => {
           books: data.data.map(b => {
             return {
               id: b[0].metadata.id,
-              title: b[0].data.title
-
+              title: b[0].data.title,
+              rating: b[0].data.rating
             };
           })
         });
@@ -41,7 +41,7 @@ var loadBook = (id) => {
           id: data[0][0].metadata.id,
           imageUrl:  '',
           title: data[0][0].data.title,
-          rating: 0,
+          rating: data[0][0].data.rating,
           tags: data[0][2].map(t => {
             return {
               id: t.metadata.id,
@@ -185,8 +185,14 @@ var updateRatingForBook = (bookId, rating) => {
     }).then(function(data) {
       // var tag = data.data[0][0];
       dispatch({
-        type: 'REMOVE_TAG_FROM_CURRENT_BOOK',
-        id: tagId
+        type: 'UPDATE_RATING_FOR_CURRENT_BOOK',
+        rating: rating
+      });
+
+      dispatch({
+        type: 'UPDATE_BOOK_RATING',
+        id: bookId,
+        rating: rating
       });
     });
   };
